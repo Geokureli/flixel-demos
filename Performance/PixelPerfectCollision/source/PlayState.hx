@@ -28,8 +28,15 @@ class PlayState extends FlxState
 	// How fast the player moves
 	inline static var PLAYER_SPEED:Int = 75;
 
-	inline static var INFO:String = "Collisions: |hits|\n" + "FPS: |fps| \n\n" + "[W/S]           Objects: |objects|\n"
-		+ "[A/D]           Alpha tolerance: |alpha|\n" + "[ARROWS]    Move\n" + "[R]               Randomize\n" + "[SPACE]       Toggle rotations";
+	inline static var INFO:String
+		= "Collisions: |hits|\n"
+		+ "Checks:     |checks|\n"
+		+ "FPS:           |fps| \n\n"
+		+ "[W/S]           Objects: |objects|\n"
+		+ "[A/D]           Alpha tolerance: |alpha|\n"
+		+ "[ARROWS]    Move\n"
+		+ "[R]               Randomize\n"
+		+ "[SPACE]       Toggle rotations";
 
 	// group holding the player and the aliens
 	var aliens:FlxTypedGroup<FlxSprite>;
@@ -39,6 +46,9 @@ class PlayState extends FlxState
 
 	// number of collisions at any given time
 	var numCollisions:Int = 0;
+	
+	// number of times pixelPerfectCheck is called any given time
+	var numChecks:Int = 0;
 
 	// setting this to 255 means two object will collide only if totally opaque
 	var alphaTolerance:Int = 1;
@@ -205,45 +215,37 @@ class PlayState extends FlxState
 	 */
 	function checkCollisions():Void
 	{
+		numChecks = 0;
 		numCollisions = 0;
+		
 		player.color = FlxColor.GREEN;
-
-		for (i in 0...aliens.length)
+		
+		for (alien in aliens)
+			alien.color = FlxColor.WHITE;
+		
+		function checkPixels(obj1:FlxSprite, obj2:FlxSprite)
 		{
-			var obj1 = aliens.members[i];
-			var collides = false;
-
-			// Only collide alive members
-			if (!obj1.alive)
-				continue;
-
-			for (j in 0...aliens.length)
-			{
-				var obj2 = aliens.members[j];
-
-				// Only collide alive members and don't collide an object with itself
-				if (!obj2.alive || (i == j))
-					continue;
-
-				// this is how we check if obj1 and obj2 are colliding
-				if (FlxCollision.pixelPerfectCheck(obj1, obj2, alphaTolerance))
-				{
-					collides = true;
-					numCollisions++;
-					break;
-				}
-			}
-
-			// We check collisions with the player seperately, since he's not in the group
-			if (FlxCollision.pixelPerfectCheck(obj1, player, alphaTolerance))
-			{
-				collides = true;
-				numCollisions++;
-				player.color = FlxColor.RED;
-			}
-
-			obj1.color = collides ? FlxColor.RED : FlxColor.WHITE;
+			numChecks++;
+			return FlxCollision.pixelPerfectCheck(obj1, obj2, alphaTolerance);
 		}
+		
+		function onPixelOverlap(obj1:FlxSprite, obj2:FlxSprite)
+		{
+			if (obj1.color == FlxColor.WHITE)
+			{
+				obj1.color = FlxColor.RED;
+				numCollisions++;
+			}
+			
+			if (obj2.color == FlxColor.WHITE)
+			{
+				obj2.color = FlxColor.RED;
+				numCollisions++;
+			}
+		}
+		
+		FlxG.overlap(aliens, aliens, onPixelOverlap, checkPixels);
+		FlxG.overlap(player, aliens, onPixelOverlap, checkPixels);
 	}
 
 	function updateInfo():Void
@@ -252,6 +254,7 @@ class PlayState extends FlxState
 			.replace("|objects|", Std.string(aliens.countLiving() + 1))
 			.replace("|alpha|", Std.string(alphaTolerance))
 			.replace("|hits|", Std.string(numCollisions))
+			.replace("|checks|", Std.string(numChecks))
 			.replace("|fps|", Std.string(fps.currentFPS));
 	}
 
