@@ -1,13 +1,13 @@
 package;
 
-import flixel.effects.particles.FlxEmitter;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.effects.particles.FlxEmitter;
+import flixel.math.FlxPoint;
+import flixel.path.FlxPath;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
-import flixel.path.FlxPath;
-import flixel.math.FlxPoint;
 import flixel.util.FlxStringUtil;
 
 class PlayState extends FlxState
@@ -105,7 +105,7 @@ class PlayState extends FlxState
 
 		if (FlxG.keys.justReleased.ENTER)
 		{
-			FlxG.switchState(new PlayState2());
+			FlxG.switchState(PlayState2.new);
 		}
 
 		super.update(elapsed);

@@ -1,13 +1,13 @@
 package;
 
+import Reg.TILE_SIZE;
 import flash.display.BlendMode;
 import flixel.FlxG;
 import flixel.FlxState;
-import flixel.text.FlxText;
 import flixel.math.FlxPoint;
-import flixel.util.FlxColor;
+import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
-import Reg.TILE_SIZE;
+import flixel.util.FlxColor;
 
 class MenuState extends FlxState
 {
@@ -65,7 +65,7 @@ class MenuState extends FlxState
 	 */
 	function startGame():Void
 	{
-		FlxG.switchState(new PlayState());
+		FlxG.switchState(PlayState.new);
 	}
 
 	override public function update(elapsed:Float):Void

@@ -1,19 +1,19 @@
 package;
 
-import flixel.effects.particles.FlxEmitter;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.effects.particles.FlxEmitter;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
+import flixel.system.FlxAssets;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
-import flixel.system.FlxAssets;
 #if SHOW_FPS
-import openfl.display.FPS;
 import openfl.Lib;
+import openfl.display.FPS;
 #end
 
 /**
@@ -341,7 +341,7 @@ class PlayState extends FlxState
 		// Escape to the main menu
 		#if FLX_KEYBOARD
 		if (FlxG.keys.pressed.ESCAPE)
-			FlxG.switchState(new MenuState());
+			FlxG.switchState(MenuState.new);
 		#end
 	}
 
@@ -363,7 +363,7 @@ class PlayState extends FlxState
 	{
 		// Reset the sounds for going inbetween the menu etc
 		FlxG.sound.destroy(true);
-		FlxG.switchState(new VictoryState());
+		FlxG.switchState(VictoryState.new);
 	}
 
 	/**

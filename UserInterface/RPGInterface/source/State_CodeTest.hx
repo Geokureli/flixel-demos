@@ -1,14 +1,14 @@
 import flash.geom.Rectangle;
-import flixel.addons.ui.FlxUI;
+import flixel.FlxG;
 import flixel.addons.ui.FlxUI9SliceSprite;
+import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUIButton;
 import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.ui.FlxUIRadioGroup;
 import flixel.addons.ui.FlxUISprite;
+import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUIText;
-import flixel.FlxG;
-import flixel.addons.ui.FlxUIState;
 
 /**
  * @author Lars Doucet
@@ -36,7 +36,7 @@ class State_CodeTest extends FlxUIState
 				case "click_button":
 					switch (Std.string(params[0]))
 					{
-						case "back": FlxG.switchState(new State_Title());
+						case "back": FlxG.switchState(() -> new State_Title());
 					}
 			}
 		}

@@ -1,6 +1,6 @@
-import flixel.addons.ui.FlxUITypedButton;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
+import flixel.addons.ui.FlxUITypedButton;
 
 /**
  * @author Lars Doucet
@@ -22,11 +22,11 @@ class State_Demo extends FlxUIState
 				var str:String = (params != null && params.length >= 1) ? cast params[0] : "";
 				if (str == "defaults")
 				{
-					FlxG.switchState(new State_Demo2());
+					FlxG.switchState(() -> new State_Demo2());
 				}
 				if (str == "hand_code")
 				{
-					FlxG.switchState(new State_DemoCode());
+					FlxG.switchState(() -> new State_DemoCode());
 				}
 		}
 	}
@@ -37,7 +37,7 @@ class State_Demo extends FlxUIState
 		#if debug
 		if (FlxG.keys.justPressed.R)
 		{
-			FlxG.switchState(new State_Demo());
+			FlxG.switchState(() -> new State_Demo());
 		}
 		#end
 	}

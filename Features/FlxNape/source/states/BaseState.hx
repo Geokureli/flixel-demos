@@ -1,8 +1,8 @@
 package states;
 
-import flixel.addons.nape.FlxNapeSpace;
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.addons.nape.FlxNapeSpace;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import openfl.display.FPS;
@@ -10,7 +10,7 @@ import openfl.display.FPS;
 class BaseState extends FlxState
 {
 	var fps:FPS;
-	var states:Array<Dynamic> = [Pyramid, Balloons, Blob, Fight, Cutup, SolarSystem];
+	var states:Array<Dynamic> = [Pyramid.new, Balloons.new, Blob.new, Fight.new, Cutup.new, SolarSystem.new];
 
 	static var stateIndex = 0;
 
@@ -38,7 +38,7 @@ class BaseState extends FlxState
 	function changeState(modifier:Int):Void
 	{
 		stateIndex = FlxMath.wrap(stateIndex + modifier, 0, states.length - 1);
-		FlxG.switchState(Type.createInstance(states[stateIndex], []));
+		FlxG.switchState(states[stateIndex]);
 	}
 
 	override public function destroy():Void

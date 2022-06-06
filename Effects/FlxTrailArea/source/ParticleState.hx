@@ -1,10 +1,10 @@
 package;
 
+import flixel.FlxG;
+import flixel.FlxState;
 import flixel.addons.effects.FlxTrailArea;
 import flixel.effects.particles.FlxEmitter;
 import flixel.effects.particles.FlxParticle;
-import flixel.FlxG;
-import flixel.FlxState;
 import flixel.util.FlxDestroyUtil;
 import flixel.util.FlxTimer;
 
@@ -77,7 +77,7 @@ class ParticleState extends FlxState
 
 		// Toggle states
 		if (FlxG.keys.justReleased.SPACE)
-			FlxG.switchState(new BlurState());
+			FlxG.switchState(BlurState.new);
 	}
 
 	/**

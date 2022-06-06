@@ -1,10 +1,10 @@
 package;
 
-import flixel.addons.display.FlxStarField.FlxStarField2D;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.addons.display.FlxStarField.FlxStarField2D;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import flixel.tweens.FlxTween;
@@ -88,7 +88,7 @@ class PlayState extends FlxState
 		// Escape to the menu
 		if (FlxG.keys.pressed.ESCAPE)
 		{
-			FlxG.switchState(new MenuState());
+			FlxG.switchState(MenuState.new);
 		}
 
 		super.update(elapsed);

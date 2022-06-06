@@ -1,11 +1,11 @@
 package;
 
-import flixel.addons.api.FlxGameJolt;
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.addons.api.FlxGameJolt;
 import flixel.group.FlxGroup;
-import flixel.text.FlxText;
 import flixel.math.FlxMath;
+import flixel.text.FlxText;
 import flixel.util.FlxTimer;
 
 class PlayState extends FlxState
@@ -93,7 +93,7 @@ class PlayState extends FlxState
 		}
 		if (FlxG.keys.justPressed.ESCAPE)
 		{
-			FlxG.switchState(new MenuState());
+			FlxG.switchState(MenuState.new);
 		}
 		#end
 
@@ -150,6 +150,6 @@ class PlayState extends FlxState
 
 	function endGame(f:FlxTimer):Void
 	{
-		FlxG.switchState(new MenuState());
+		FlxG.switchState(MenuState.new);
 	}
 }

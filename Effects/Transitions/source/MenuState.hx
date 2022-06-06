@@ -1,9 +1,10 @@
 package;
 
-import flixel.addons.transition.FlxTransitionableState;
+import flixel.FlxG;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileCircle;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
 import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileSquare;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.addons.transition.TransitionData;
 import flixel.addons.ui.FlxUIButton;
 import flixel.addons.ui.FlxUINumericStepper;
@@ -11,7 +12,6 @@ import flixel.addons.ui.FlxUIRadioGroup;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUIText;
 import flixel.addons.ui.FlxUITypedButton;
-import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
@@ -242,7 +242,7 @@ class MenuState extends FlxUIState
 
 	function transition():Void
 	{
-		FlxG.switchState(new MenuStateB());
+		FlxG.switchState(() -> new MenuStateB());
 	}
 
 	override public function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>):Void

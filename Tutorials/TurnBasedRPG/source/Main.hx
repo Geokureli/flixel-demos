@@ -10,7 +10,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(320, 240, MenuState));
+		addChild(new FlxGame(320, 240, MenuState.new));
 
 		#if desktop
 		if (FlxG.save.data.fullscreen != null)

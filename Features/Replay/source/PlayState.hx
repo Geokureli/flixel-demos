@@ -3,10 +3,10 @@ package;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.math.FlxPoint;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.util.FlxColor;
-import flixel.math.FlxPoint;
 import openfl.Assets;
 
 class PlayState extends FlxState
@@ -165,6 +165,6 @@ class PlayState extends FlxState
 		 */
 		var save:String = FlxG.vcr.stopRecording(false);
 
-		FlxG.vcr.loadReplay(save, new PlayState(), ["ANY", "MOUSE"], 0, startRecording);
+		FlxG.vcr.loadReplay(save, PlayState.new, ["ANY", "MOUSE"], 0, startRecording);
 	}
 }

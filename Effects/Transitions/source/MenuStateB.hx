@@ -1,8 +1,8 @@
 package;
 
+import flixel.FlxG;
 import flixel.addons.ui.FlxUISprite;
 import flixel.addons.ui.FlxUIText;
-import flixel.FlxG;
 
 /**
  * @author larsiusprime
@@ -20,6 +20,6 @@ class MenuStateB extends MenuState
 
 	override function transition():Void
 	{
-		FlxG.switchState(new MenuState());
+		FlxG.switchState(() -> new MenuState());
 	}
 }

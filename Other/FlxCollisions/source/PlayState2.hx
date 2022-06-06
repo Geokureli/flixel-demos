@@ -1,9 +1,9 @@
 package;
 
-import flixel.effects.particles.FlxEmitter;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.effects.particles.FlxEmitter;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 
@@ -96,7 +96,7 @@ class PlayState2 extends FlxState
 
 		if (FlxG.keys.justReleased.ENTER)
 		{
-			FlxG.switchState(new PlayState3());
+			FlxG.switchState(PlayState3.new);
 		}
 	}
 }

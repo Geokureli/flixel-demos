@@ -1,11 +1,11 @@
 package;
 
-import flixel.effects.particles.FlxEmitter;
 import flixel.FlxG;
 import flixel.FlxState;
+import flixel.effects.particles.FlxEmitter;
+import flixel.system.FlxAssets;
 import flixel.text.FlxText;
 import flixel.util.FlxAxes;
-import flixel.system.FlxAssets;
 
 /**
  * A FlxState which is shown when the player wins.
@@ -54,7 +54,7 @@ class VictoryState extends FlxState
 				FlxG.sound.play(FlxAssets.getSound("assets/sounds/menu_hit_2"));
 				FlxG.cameras.fade(0xff131c1b, 2, false, function()
 				{
-					FlxG.switchState(new PlayState());
+					FlxG.switchState(PlayState.new);
 				});
 			}
 		}
