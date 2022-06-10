@@ -7,7 +7,7 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.addons.api.FlxGameJolt;
-import flixel.addons.text.FlxTextField;
+import flixel.addons.ui.FlxInputText;
 import flixel.group.FlxGroup;
 import flixel.text.FlxText;
 import openfl.utils.ByteArray;
@@ -35,8 +35,8 @@ class MenuState extends FlxState
 	var _login:Button;
 	var _apiCurrentPage:Int;
 	var _mainMenuTime:Float = 0.0;
-	var _input1:FlxTextField;
-	var _input2:FlxTextField;
+	var _input1:FlxInputText;
+	var _input2:FlxInputText;
 	var _imageDisplay:FlxSprite;
 
 	static inline function API_TEST_BUTTONS():Array<Array<String>>
@@ -246,27 +246,21 @@ class MenuState extends FlxState
 		Reg.quarterX(word2, 1);
 		word1.color = word2.color = Reg.med_dark;
 
-		_input1 = new FlxTextField(0, 70, 240, " ");
-		_input2 = new FlxTextField(0, 90, 240, " ");
-		Reg.quarterX(_input1, 3);
-		Reg.quarterX(_input2, 3);
+		_input1 = new FlxInputText(word1.x + word1.width + 20, 70, 240, " ");
+		_input2 = new FlxInputText(word2.x + word2.width + 20, 90, 240, " ");
 		_input2.color = _input1.color = Reg.med_lite;
 		_input2.textField.selectable = _input1.textField.selectable = true;
 		_input2.textField.multiline = _input1.textField.multiline = false;
 		_input2.textField.wordWrap = _input1.textField.wordWrap = false;
 		_input2.textField.maxChars = _input1.textField.maxChars = 30;
+		_input2.backgroundColor = _input1.backgroundColor = Reg.med_dark;
+		_input2.fieldBorderThickness = _input1.fieldBorderThickness = 0;
+		_input2.caretColor = _input1.caretColor = Reg.med_lite;
+
 		#if flash
 		_input2.textField.restrict = _input1.textField.restrict = "A-Za-z0-9_";
 		#end
 		_input2.textField.type = _input1.textField.type = TextFieldType.INPUT;
-
-		var input1bg:PongSprite = new PongSprite(Std.int(_input1.x), Std.int(_input1.y), Std.int(_input1.width - 40), Std.int(_input1.height + 4), Reg.dark);
-		var input2bg:PongSprite = new PongSprite(Std.int(_input2.x), Std.int(_input2.y), Std.int(_input2.width - 40), Std.int(_input2.height + 4), Reg.dark);
-
-		#if desktop
-		_input1.height = input1bg.height;
-		_input2.height = input2bg.height;
-		#end
 
 		var trylogin:Button = new Button(0, 110, "Log in", loginCallback);
 		Reg.quarterX(trylogin, 2);
@@ -274,8 +268,6 @@ class MenuState extends FlxState
 
 		_loginGroup.add(word1);
 		_loginGroup.add(word2);
-		_loginGroup.add(input1bg);
-		_loginGroup.add(input2bg);
 		_loginGroup.add(_input1);
 		_loginGroup.add(_input2);
 		_loginGroup.add(instruct);
