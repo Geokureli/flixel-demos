@@ -288,10 +288,6 @@ class MenuState extends FlxState
 
 		em.start(false);
 
-		// Load the privatekey data as a bytearray.
-
-		var ba:ByteArray = new MyPrivateKey();
-
 		// If we're already initialized (which would happen on returning from the playstate), we don't need to run init().
 		// If we're not initialized, call init() using the game ID and the private key, which is converted to a string
 		// with .readUTFBytes( ba.length ). The ba.length ensures that the ByteArray will be read from beginning to end
@@ -299,6 +295,10 @@ class MenuState extends FlxState
 
 		if (!FlxGameJolt.initialized)
 		{
+			FlxGameJolt.verbose = true;
+
+			// Load the privatekey data as a bytearray.
+			var ba = new MyPrivateKey();
 			FlxGameJolt.init(19975, ba.readUTFBytes(ba.length), true, null, null, initCallback);
 		}
 		else
@@ -360,8 +360,8 @@ class MenuState extends FlxState
 	{
 		if (_loginGroup.visible)
 		{
-			_input1.text = " ";
-			_input2.text = " ";
+			_input1.text = "GeorgeKurelic";
+			_input2.text = "icoTzS";
 		}
 
 		for (g in _allScreens)
