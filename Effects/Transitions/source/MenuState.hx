@@ -1,9 +1,9 @@
 package;
 
+import flixel.system.FlxAssets;
+import flixel.FlxG;
+import flixel.addons.transition.FlxTransitionSprite;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileCircle;
-import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileDiamond;
-import flixel.addons.transition.FlxTransitionSprite.GraphicTransTileSquare;
 import flixel.addons.transition.TransitionData;
 import flixel.addons.ui.FlxUIButton;
 import flixel.addons.ui.FlxUINumericStepper;
@@ -11,20 +11,32 @@ import flixel.addons.ui.FlxUIRadioGroup;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUIText;
 import flixel.addons.ui.FlxUITypedButton;
-import flixel.FlxG;
 import flixel.graphics.FlxGraphic;
 import flixel.math.FlxPoint;
 import flixel.util.FlxColor;
+import openfl.display.BitmapData;
 
 class MenuState extends FlxUIState
 {
 	static var initialized:Bool = false;
+
+	final isStateA:Bool;
+
+	public function new(isStateA = true)
+	{
+		this.isStateA = isStateA;
+		super();
+	}
 
 	override public function create():Void
 	{
 		_xml_id = "ui";
 		super.create();
 		init();
+
+		final welcome = cast(_ui.getAsset("welcome"), FlxUIText);
+		welcome.text = isStateA ? "STATE A" : "STATE B";
+		FlxG.camera.bgColor = isStateA ? 0xFFaa0000 : 0xFF0000ff;
 	}
 
 	function init():Void
@@ -49,6 +61,7 @@ class MenuState extends FlxUIState
 
 			// Of course, this state has already been constructed, so we need to set a transOut value for it right now:
 			transOut = FlxTransitionableState.defaultTransOut;
+			trace(transOut);
 		}
 
 		// Now we just have the UI synchronize with the starting values:
@@ -112,8 +125,8 @@ class MenuState extends FlxUIState
 		if (FlxTransitionableState.defaultTransIn.type == TILES)
 		{
 			in_tile_text.visible = in_tile.visible = true;
-			var intileasset:FlxGraphic = cast FlxTransitionableState.defaultTransIn.tileData.asset;
-			in_tile.selectedId = getDefaultAssetStr(intileasset);
+			var inTileAsset:FlxGraphic = cast FlxTransitionableState.defaultTransIn.tileData.asset;
+			in_tile.selectedId = getDefaultAssetStr(inTileAsset);
 		}
 		else
 		{
@@ -135,8 +148,8 @@ class MenuState extends FlxUIState
 		if (FlxTransitionableState.defaultTransOut.type == TILES)
 		{
 			out_tile_text.visible = out_tile.visible = true;
-			var outtileasset:FlxGraphic = cast FlxTransitionableState.defaultTransOut.tileData.asset;
-			out_tile.selectedId = getDefaultAssetStr(outtileasset);
+			var outTileAsset:FlxGraphic = cast FlxTransitionableState.defaultTransOut.tileData.asset;
+			out_tile.selectedId = getDefaultAssetStr(outTileAsset);
 		}
 		else
 		{
@@ -156,9 +169,9 @@ class MenuState extends FlxUIState
 		out_dir.selectedId = getDirection(cast FlxTransitionableState.defaultTransOut.direction.x, cast FlxTransitionableState.defaultTransOut.direction.y);
 	}
 
-	function getDefaultAssetStr(c:FlxGraphic):String
+	function getDefaultAssetStr(graphic:FlxGraphic):String
 	{
-		return switch (c.assetsClass)
+		return switch (graphic.assetsClass)
 		{
 			case GraphicTransTileCircle: "circle";
 			case GraphicTransTileSquare: "square";
@@ -242,7 +255,7 @@ class MenuState extends FlxUIState
 
 	function transition():Void
 	{
-		FlxG.switchState(new MenuStateB());
+		FlxG.switchState(new MenuState(!isStateA));
 	}
 
 	override public function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>):Void

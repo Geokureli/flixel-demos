@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<box width="100%" height="100%" style="padding: 30px; border-style: solid; border-width: 1px">
+	<vbox width="100%" height="100%" horizontalAlign="center">
+		<!-- HEADER -->
+		<label text="State A" id="stateName" style="font-size:32px" horizontalAlign="center"/>
+		<box height="50"/>
+		<hbox width="100%">
+			<!-- IN -->
+			<frame width="50%" text="In">
+				<vbox width="100%" style="padding: 5px">
+					<!-- DURATION -->
+					<hbox width="100%" tooltip="How long, in seconds, it takes to transition in">
+						<label text="Duration" width="60" verticalAlign="center"/>
+						<number-stepper id="durationIn" width="100%" pos="1" step=".1" min="0.1" max="10" precision="2"/>
+					</hbox>
+					<!-- TYPE/TILE -->
+					<hbox width="100%" tooltip="The type of transition to use">
+						<label text="Type" width="60" verticalAlign="center"/>
+						<!-- TYPE -->	
+						<dropdown id="typeIn" width="50%" onChange="tileIn.hidden = typeIn.selectedItem.text != 'Tiles'">
+							<data>
+								<item text="Fade" value="fade"/>
+								<item text="Tiles" value="tiles"/>
+								<item text="None" value="none"/>
+							</data>
+						</dropdown>
+						<!-- TILE -->
+						<dropdown id="tileIn" width="50%" tooltip="The graphic to tile">
+							<data>
+								<item text="Square"/>
+								<item text="Circle"/>
+								<item text="Diamond"/>
+							</data>
+						</dropdown>
+					</hbox>
+					<!-- COLOR -->
+					<hbox width="100%" tooltip="The color of the transition">
+						<label text="Color" width="60" verticalAlign="center" styleName="no-controls"/>
+						<color-picker-popup id="colorIn" width="100%"/>
+					</hbox>
+					<!-- DIRECTION -->
+					<hbox width="100%" tooltip="The direction of the transition">
+						<label text="Direction" width="60" verticalAlign="center"/>
+						<dropdown id="directionIn" width="100%">
+							<data>
+								<item text="None"/>
+								<item text="Down-Right"/>
+								<item text="Down-Left"/>
+								<item text="Up-Right"/>
+								<item text="Up-Left"/>
+								<item text="Right"/>
+								<item text="Left"/>
+								<item text="Down"/>
+								<item text="Up"/>
+							</data>
+						</dropdown>
+					</hbox>
+				</vbox>
+			</frame>
+			<box width="50"/>
+			<!-- OUT -->
+			<frame width="50%" text="Out">
+				<vbox width="100%" style="padding: 5px">
+					<!-- DURATION -->
+					<hbox width="100%" tooltip="How long, in seconds, it takes to transition in">
+						<label text="Duration" width="60" verticalAlign="center"/>
+						<number-stepper id="durationOut" width="100%" pos="1" step=".1" min="0.1" max="10" precision="2"/>
+					</hbox>
+					<!-- TYPE/TILE -->
+					<hbox width="100%" tooltip="The type of transition to use">
+						<label text="Type" width="60" verticalAlign="center"/>
+						<!-- TYPE -->
+						<dropdown id="typeOut" width="50%" onChange="tileOut.hidden = typeOut.selectedItem.text != 'Tiles'">
+							<data>
+								<item text="Fade" value="fade"/>
+								<item text="Tiles" value="tiles"/>
+								<item text="None" value="none"/>
+							</data>
+						</dropdown>
+						<!-- TILE -->
+						<dropdown id="tileOut" width="50%" tooltip="The graphic to tile">
+							<data>
+								<item text="Square"/>
+								<item text="Circle"/>
+								<item text="Diamond"/>
+							</data>
+						</dropdown>
+					</hbox>
+					<!-- COLOR -->
+					<hbox width="100%" tooltip="The color of the transition">
+						<label text="Color" width="60" verticalAlign="center"/>
+						<color-picker-popup id="colorOut" width="100%" styleName="no-controls"/>
+					</hbox>
+					<!-- DIRECTION -->
+					<hbox width="100%" tooltip="The direction of the transition">
+						<label text="Direction" width="60" verticalAlign="center"/>
+						<dropdown id="directionOut" width="100%">
+							<data>
+								<item text="None"/>
+								<item text="Down-Right"/>
+								<item text="Down-Left"/>
+								<item text="Up-Right"/>
+								<item text="Up-Left"/>
+								<item text="Right"/>
+								<item text="Left"/>
+								<item text="Down"/>
+								<item text="Up"/>
+							</data>
+						</dropdown>
+					</hbox>
+				</vbox>
+			</frame>
+		</hbox>
+		<box height="50"/>
+		<button id="start" text="Start Transition" style="font-size:16px" width="200" height="40" horizontalAlign="center"/>
+	</vbox>
+</box>

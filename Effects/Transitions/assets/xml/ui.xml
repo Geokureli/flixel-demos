@@ -4,8 +4,6 @@
 	<definition id="outline" outline="0x000000"/>
 	<definition id="background" outline="0x000000" width="25"/>
 	
-	<sprite id="back" width="100%" height="100%" color="0xAA0000"/>
-	
 	<text id="welcome" use_def="outline" text="STATE A"/>
 	
 	<button id="transition" label="TRANSITION!" y="-50" width="150" height="50">

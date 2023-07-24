@@ -1,6 +1,7 @@
 package;
 
 import flixel.FlxGame;
+import haxe.ui.Toolkit;
 import openfl.display.Sprite;
 
 class Main extends Sprite
@@ -8,6 +9,11 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
-		addChild(new FlxGame(640, 480, MenuState));
+		
+		Toolkit.init();
+		Toolkit.autoScale = false;
+		
+		// addChild(new FlxGame(640, 480, MenuState));
+		addChild(new FlxGame(640, 480, HaxeUIMenuState));
 	}
 }
