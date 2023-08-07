@@ -1,10 +1,10 @@
 package;
 
-import flixel.util.FlxSignal;
+import flixel.FlxG;
 import flixel.math.FlxPoint;
 import flixel.graphics.FlxGraphic;
-import flixel.FlxG;
 import flixel.util.FlxColor;
+import flixel.util.FlxSignal;
 import flixel.addons.transition.TransitionData;
 import flixel.addons.transition.FlxTransitionSprite;
 import flixel.addons.transition.FlxTransitionableState;
@@ -32,30 +32,63 @@ class HaxeUIMenuState extends FlxTransitionableState
 		{
 			mainUI.setData();
 			transOut = FlxTransitionableState.defaultTransOut;
-			mainUI.active = false;
 			FlxG.switchState(new HaxeUIMenuState(!isStateA));
 		}
 		
+		// persistentUpdate = true;
+		// persistentDraw = true;
 		super.create();
-	}
-	
-	override function transitionIn()
-	{
-		if (transIn != null)
-			mainUI.active = false;
-		
-		super.transitionIn();
-	}
-	
-	override function finishTransIn()
-	{
-		super.finishTransIn();
-		mainUI.active = true;
 	}
 	
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
+	}
+	
+	override function transitionIn()
+	{
+		// copied from super so we can delay start until mainUI is ready
+		if (transIn != null && transIn.type != NONE)
+		{
+			if (FlxTransitionableState.skipNextTransIn)
+			{
+				FlxTransitionableState.skipNextTransIn = false;
+				if (finishTransIn != null)
+				{
+					finishTransIn();
+				}
+				return;
+			}
+			
+			var _trans = createTransition(transIn);
+			
+			_trans.setStatus(FULL);
+			openSubState(_trans);
+			
+			_trans.finishCallback = finishTransIn;
+			
+			// delay start for ui
+			// mainUI.hidden = true;
+			// if (mainUI.initComplete)
+				_trans.start(OUT);
+			// else
+			// 	mainUI.onInitComplete.addOnce(()->_trans.start(OUT));
+		}
+	}
+	
+	// override function finishTransIn()
+	// {
+	// 	mainUI.fadeIn();
+	// }
+	
+	// override function transitionOut(?onExit:()->Void)
+	// {
+	// 	mainUI.fadeOut(()->onUIFadeOutComplete(onExit));
+	// }
+	
+	function onUIFadeOutComplete(onExit:()->Void)
+	{
+		super.transitionOut(onExit);
 	}
 }
 
@@ -64,7 +97,8 @@ class MainUI extends haxe.ui.containers.Box
 {
 	static inline var defaultColor:FlxColor = 0xFF000000;
 	
-	public var initComplete = new FlxSignal();
+	public var initComplete = false;
+	public var onInitComplete = new FlxSignal();
 	
 	override function onReady()
 	{
@@ -94,29 +128,30 @@ class MainUI extends haxe.ui.containers.Box
 		else
 			colorOut.selectedItem = defaultColor.rgb;
 		
-		initComplete.dispatch();
+		initComplete = true;
+		onInitComplete.dispatch();
 	}
 	
 	public function setData()
 	{
 		if (FlxTransitionableState.defaultTransIn == null)
-			FlxTransitionableState.defaultTransIn = new TransitionData(FADE, defaultColor, 1.0, FlxPoint.get(), TileType.diamond);
+			FlxTransitionableState.defaultTransIn = new TransitionData(FADE, defaultColor, 1.0, FlxPoint.get(), TileData.diamond);
 		
 		if (FlxTransitionableState.defaultTransOut == null)
-			FlxTransitionableState.defaultTransOut = new TransitionData(FADE, defaultColor, 1.0, FlxPoint.get(), TileType.diamond);
+			FlxTransitionableState.defaultTransOut = new TransitionData(FADE, defaultColor, 1.0, FlxPoint.get(), TileData.diamond);
 		
 		final inData = FlxTransitionableState.defaultTransIn;
 		inData.duration = durationIn.pos;
 		Direction.setPoint(directionIn.selectedItem.text, inData.direction);
 		inData.type = typeIn.selectedItem.value;
-		inData.tileData = TileType.getDataFromString(tileIn.selectedItem.text);
+		inData.tileData = TileData.fromType(tileIn.selectedItem.text);
 		inData.color = 0xFF000000 | colorIn.selectedItem;
 		
 		final outData = FlxTransitionableState.defaultTransOut;
 		outData.duration = durationOut.pos;
 		Direction.setPoint(directionOut.selectedItem.text, outData.direction);
 		outData.type = typeOut.selectedItem.value;
-		outData.tileData = TileType.getDataFromString(tileOut.selectedItem.text);
+		outData.tileData = TileData.fromType(tileOut.selectedItem.text);
 		outData.color = 0xFF000000 | colorOut.selectedItem;
 	}
 }
@@ -127,68 +162,47 @@ enum abstract TileType(String) from String
 	var CIRCLE = "Circle";
 	var SQUARE = "Square";
 	
-	public function getData()
+	public function toData()
 	{
-		if (diamond == null)
-			init();
-		
 		return switch(this:TileType)
 		{
-			case DIAMOND: diamond;
-			case CIRCLE: circle;
-			case SQUARE: square;
+			case DIAMOND: TileData.diamond;
+			case CIRCLE: TileData.circle;
+			case SQUARE: TileData.square;
+			case type: throw 'Invalid type: $type';
 		}
 	}
 	
-	public static var diamond:TileData;
-	public static var circle:TileData;
-	public static var square:TileData;
-	
-	public static function init()
+	public static inline function fromData(data:TileData)
 	{
-		diamond = TileData.fromClass(GraphicTransTileDiamond);
-		circle = TileData.fromClass(GraphicTransTileCircle);
-		square = TileData.fromClass(GraphicTransTileSquare);
-	}
-	
-	public static function fromString(data:String):TileType
-	{
-		return data;
-	}
-	
-	public static function getDataFromString(data:String):TileData
-	{
-		return fromString(data).getData();
-	}
-	
-	public static function fromData(data:TileData)
-	{
-		if (diamond == null)
-			init();
-		
-		if (data == diamond) return DIAMOND;
-		if (data == circle) return CIRCLE;
-		if (data == square) return SQUARE;
-		
-		throw "Invalid data: " + data;
+		return data.toType();
 	}
 }
 
 abstract TileData(TransitionTileData) to TransitionTileData from TransitionTileData
 {
-	inline public function new(graphic:FlxGraphic, width:Int, height:Int, ?frameRate:Int)
+	public static inline var DIAMOND_ASSET = 'flixel/images/transitions/diamond.png';
+	public static inline var CIRCLE_ASSET = 'flixel/images/transitions/circle.png';
+	public static inline var SQUARE_ASSET = 'flixel/images/transitions/square.png';
+	
+	public static var diamond = { asset:DIAMOND_ASSET, width:32, height:32 };
+	public static var circle = { asset:CIRCLE_ASSET, width:32, height:32 };
+	public static var square = { asset:SQUARE_ASSET, width:32, height:32 };
+	
+	public static inline function fromType(type:TileType)
 	{
-		this = { asset:graphic, width:width, height:height };
-		if (frameRate != null)
-			this.frameRate = frameRate;
+		return type.toData();
 	}
 	
-	public static function fromClass(graphicClass:Class<openfl.display.BitmapData>)
+	public function toType()
 	{
-		final graphic = FlxGraphic.fromClass(graphicClass);
-		graphic.persist = true;
-		graphic.destroyOnNoUse = false;
-		return new TileData(graphic, 32, 32);
+		return switch(this.asset)
+		{
+			case DIAMOND_ASSET: TileType.DIAMOND;
+			case CIRCLE_ASSET: TileType.CIRCLE;
+			case SQUARE_ASSET: TileType.SQUARE;
+			case asset: throw 'Invalid asset: $asset';
+		}
 	}
 }
 
