@@ -81,7 +81,7 @@ class Player extends FlxSprite
 		move = new FlxActionAnalog();
 
 		if (actions == null)
-			actions = FlxG.inputs.add(new FlxActionManager());
+			actions = FlxG.inputs.addInput(new FlxActionManager());
 		actions.addActions([up, down, left, right, trigger1, trigger2, move]);
 
 		// Add keyboard inputs
@@ -95,10 +95,17 @@ class Player extends FlxSprite
 		right.addKey(D, PRESSED);
 
 		// Add virtual pad (on-screen button) inputs
+		#if (flixel >= version("6.0.0"))
+		up.addInput(_virtualPad.getButton(UP), PRESSED);
+		down.addInput(_virtualPad.getButton(DOWN), PRESSED);
+		left.addInput(_virtualPad.getButton(LEFT), PRESSED);
+		right.addInput(_virtualPad.getButton(RIGHT), PRESSED);
+		#else
 		up.addInput(_virtualPad.buttonUp, PRESSED);
 		down.addInput(_virtualPad.buttonDown, PRESSED);
 		left.addInput(_virtualPad.buttonLeft, PRESSED);
 		right.addInput(_virtualPad.buttonRight, PRESSED);
+		#end
 
 		// Add gamepad DPAD inputs
 		up.addGamepad(DPAD_UP, PRESSED);
@@ -144,30 +151,41 @@ class Player extends FlxSprite
 
 	function updateDigital():Void
 	{
-		_virtualPad.buttonUp.color = FlxColor.WHITE;
-		_virtualPad.buttonDown.color = FlxColor.WHITE;
-		_virtualPad.buttonLeft.color = FlxColor.WHITE;
-		_virtualPad.buttonRight.color = FlxColor.WHITE;
+		#if (flixel >= version("6.0.0"))
+		final vUp = _virtualPad.getButton(UP);
+		final vDown = _virtualPad.getButton(DOWN);
+		final vLeft = _virtualPad.getButton(LEFT);
+		final vRight = _virtualPad.getButton(RIGHT);
+		#else
+		final vUp = _virtualPad.buttonUp;
+		final vDown = _virtualPad.buttonDown;
+		final vLeft = _virtualPad.buttonLeft;
+		final vRight = _virtualPad.buttonRight;
+		#end
+		vUp.color = FlxColor.WHITE;
+		vDown.color = FlxColor.WHITE;
+		vLeft.color = FlxColor.WHITE;
+		vRight.color = FlxColor.WHITE;
 
 		if (down.triggered)
 		{
-			_virtualPad.buttonDown.color = FlxColor.LIME;
+			vDown.color = FlxColor.LIME;
 			moveY = 1;
 		}
 		else if (up.triggered)
 		{
-			_virtualPad.buttonUp.color = FlxColor.LIME;
+			vUp.color = FlxColor.LIME;
 			moveY = -1;
 		}
 
 		if (left.triggered)
 		{
-			_virtualPad.buttonLeft.color = FlxColor.LIME;
+			vLeft.color = FlxColor.LIME;
 			moveX = -1;
 		}
 		else if (right.triggered)
 		{
-			_virtualPad.buttonRight.color = FlxColor.LIME;
+			vRight.color = FlxColor.LIME;
 			moveX = 1;
 		}
 

@@ -46,14 +46,14 @@ class PlayState extends FlxState
 		ui = new UILayer(resetLevel);
 
 		// the player is a high-tech triangle
-		player = new FlxSprite(75, 144);
-		player.makeGraphic(26, 26, FlxColor.TRANSPARENT, true);
-		FlxSpriteUtil.drawTriangle(player, 0, 0, 26, FlxColor.WHITE);
-		player.offset.set(13, 13);
+		player = new FlxSprite(75 * 2, 144 * 2);
+		player.makeGraphic(26 * 2, 26 * 2, FlxColor.TRANSPARENT, true);
+		FlxSpriteUtil.drawTriangle(player, 0, 0, 26 * 2, FlxColor.WHITE);
+		player.offset.set(13 * 2, 13 * 2);
 		player.pixelPerfectRender = false;
-		player.antialiasing = true;
+		player.antialiasing = false;
 
-		playerPosition = FlxPoint.get(75, 144);
+		playerPosition = FlxPoint.get(75 * 2, 144 * 2);
 
 		currLevelIndex = -1;
 		blockLevelReset = false;
@@ -65,7 +65,11 @@ class PlayState extends FlxState
 
 		// the original file was edited to have a 44100 Hz sampling frequency, since Flash cannot use 48000 Hz
 		// this is really easy to change using a free program like Audacity
-		FlxG.sound.playMusic(FlxAssets.getSound("assets/music/Waltzon_edit"), 0.5);
+		#if flash
+		FlxG.sound.playMusic("assets/music/Waltzon_edit.mp3", 0.5);
+		#else
+		FlxG.sound.playMusic("assets/music/Waltzon_edit.ogg", 0.5);
+		#end
 
 		openMenu();
 	}
@@ -172,7 +176,7 @@ class PlayState extends FlxState
 		if (currLevelIndex >= numLevels)
 		{
 			// win the game
-			var endCircle = new Circle(FlxPoint.get(300, 144), 350, Color.WHITE);
+			var endCircle = new Circle(FlxPoint.get(300 * 2, 144 * 2), 350 * 2, Color.WHITE);
 			game.drawCircle(endCircle, 1, 4.32);
 
 			openSubState(new WinState());

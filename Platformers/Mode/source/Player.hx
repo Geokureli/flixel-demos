@@ -15,7 +15,7 @@ import flixel.ui.FlxVirtualPad;
 import flixel.util.FlxDestroyUtil;
 #end
 
-class Player extends FlxSprite
+class Player extends FlxSprite implements IHurt
 {
 	#if VIRTUAL_PAD
 	public static var virtualPad:FlxVirtualPad;
@@ -117,7 +117,7 @@ class Player extends FlxSprite
 		#end
 
 		if (actions == null)
-			actions = FlxG.inputs.add(new FlxActionManager());
+			actions = FlxG.inputs.addUniqueType(new FlxActionManager());
 		actions.addActions([_up, _down, _left, _right, _jump, _shoot]);
 	}
 
@@ -168,14 +168,12 @@ class Player extends FlxSprite
 		}
 	}
 
-	override public function hurt(damage:Float):Void
+	public function hurt(damage:Int = 1):Void
 	{
-		damage = 0;
-
 		if (flickering)
 			return;
 
-		FlxG.sound.play(FlxAssets.getSound("assets/sounds/hurt"));
+		FlxG.sound.play(AssetPaths.sounds.hurt);
 
 		flicker(1.3);
 
@@ -186,8 +184,6 @@ class Player extends FlxSprite
 			velocity.x = -maxVelocity.x;
 		else
 			velocity.x = maxVelocity.x;
-
-		super.hurt(damage);
 	}
 
 	function flicker(Duration:Float):Void
@@ -205,8 +201,8 @@ class Player extends FlxSprite
 			return;
 
 		solid = false;
-		FlxG.sound.play(FlxAssets.getSound("assets/sounds/asplode"));
-		FlxG.sound.play(FlxAssets.getSound("assets/sounds/menu_hit_2"));
+		FlxG.sound.play(AssetPaths.sounds.asplode);
+		FlxG.sound.play(AssetPaths.sounds.menu_hit_2);
 
 		super.kill();
 
@@ -258,7 +254,7 @@ class Player extends FlxSprite
 		if (isReadyToJump && (velocity.y == 0))
 		{
 			velocity.y = -_jumpPower;
-			FlxG.sound.play(FlxAssets.getSound("assets/sounds/jump"));
+			FlxG.sound.play(AssetPaths.sounds.jump);
 		}
 	}
 
@@ -270,7 +266,7 @@ class Player extends FlxSprite
 
 		if (flickering)
 		{
-			FlxG.sound.play(FlxAssets.getSound("assets/sounds/jam"));
+			FlxG.sound.play(AssetPaths.sounds.jam);
 		}
 		else
 		{
@@ -297,7 +293,7 @@ class Player extends FlxSprite
 	}
 }
 
-@:enum abstract Animation(String) to String
+enum abstract Animation(String) to String
 {
 	var IDLE = "idle";
 	var IDLE_UP = "idle_up";

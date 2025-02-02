@@ -75,7 +75,8 @@ class PlayState extends FlxState
 
 	override public function update(elapsed:Float):Void
 	{
-		FlxG.collide(_tilemap, _player);
+		// FlxG.collide(_tilemap, _player);
+		FlxG.collide(_player, _tilemap);
 
 		// Update the player
 		_player.acceleration.x = 0;
@@ -115,8 +116,8 @@ class PlayState extends FlxState
 		{
 			_cursor.scale.set(2, 2);
 		}
-		_cursor.x = FlxG.mouse.screenX;
-		_cursor.y = FlxG.mouse.screenY;
+		_cursor.x = FlxG.mouse.viewX;
+		_cursor.y = FlxG.mouse.viewY;
 
 		super.update(elapsed);
 	}
@@ -165,6 +166,6 @@ class PlayState extends FlxState
 		 */
 		var save:String = FlxG.vcr.stopRecording(false);
 
-		FlxG.vcr.loadReplay(save, new PlayState(), ["ANY", "MOUSE"], 0, startRecording);
+		FlxG.vcr.loadReplay(save, PlayState.new, ["ANY", "MOUSE"], 0, startRecording);
 	}
 }

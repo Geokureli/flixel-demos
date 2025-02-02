@@ -12,6 +12,7 @@ import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
 import flixel.ui.FlxButton;
 import flixel.util.FlxColor;
+
 // import openfl.Assets;
 
 class PlayState extends FlxState
@@ -200,7 +201,7 @@ class PlayState extends FlxState
 			function clearMap()
 			{
 				for (i in 0...map.totalTiles)
-					map.setTileByIndex(i, 0);
+					map.setTileIndex(i, 0);
 				
 				redrawPath();
 			}
@@ -257,22 +258,22 @@ class PlayState extends FlxState
 		// Check mouse pressed and unit action
 		if (FlxG.mouse.pressed)
 		{
-			var index = map.getTileIndexByCoords(FlxG.mouse.getWorldPosition());
+			var index = map.getMapIndexAt(FlxG.mouse.x, FlxG.mouse.y);
 			if (index != -1)
 			{
-				var tileEmpty = map.getTileByIndex(index) == 0;
+				var tileEmpty = map.getTileIndex(index) == 0;
 				if (FlxG.mouse.justPressed)
 				{
 					// start toggle tiles
 					isPlacing = tileEmpty;
-					map.setTileByIndex(index, isPlacing ? 1 : 0, true);
+					map.setTileIndex(index, isPlacing ? 1 : 0, true);
 
 					mapChanged = true;
 				}
 				else if (tileEmpty == isPlacing)
 				{
 					// continue toggling tiles on mouse drag
-					map.setTileByIndex(index, isPlacing ? 1 : 0, true);
+					map.setTileIndex(index, isPlacing ? 1 : 0, true);
 
 					mapChanged = true;
 				}
@@ -303,17 +304,17 @@ class PlayState extends FlxState
 	{
 		// Find path to goal from unit to goal
 		pathfinder.diagonalPolicy = diagonalPolicy;
-		var pathPoints:Array<FlxPoint> = pathfinder.findPath(
+		final pathPoints:Array<FlxPoint> = pathfinder.findPath(
 			cast map,
-			FlxPoint.get(unit.x + unit.width / 2, unit.y + unit.height / 2),
-			FlxPoint.get(goal.x + goal.width / 2, goal.y + goal.height / 2),
+			FlxPoint.weak(unit.x + unit.width / 2, unit.y + unit.height / 2),
+			FlxPoint.weak(goal.x + goal.width / 2, goal.y + goal.height / 2),
 			simplify
 		);
 
 		// Tell unit to follow path
 		if (pathPoints != null)
 		{
-			unit.path.start(pathPoints);
+			unit.path.start(pathPoints, 100.0, FORWARD, false, true);
 			action = GO;
 			instructions.text = INSTRUCTIONS;
 		}

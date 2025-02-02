@@ -65,7 +65,7 @@ class MenuState extends FlxState
 	 */
 	function startGame():Void
 	{
-		FlxG.switchState(new PlayState());
+		FlxG.switchState(PlayState.new);
 	}
 
 	override public function update(elapsed:Float):Void
@@ -80,7 +80,7 @@ class MenuState extends FlxState
 	/**
 	 * Starts the enemy on the map path.
 	 */
-	public function enemyFollowPath(?_):Void
+	public function enemyFollowPath():Void
 	{
 		_enemy.setPosition(startPosition.x, startPosition.y - 12);
 		var path:Array<FlxPoint> = _map.findPath(startPosition, endPosition);

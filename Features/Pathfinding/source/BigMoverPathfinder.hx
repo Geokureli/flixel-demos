@@ -26,15 +26,20 @@ class BigMoverPathfinder extends FlxDiagonalPathfinder
 			(heightInTiles - 1) / 2 * map.height / map.heightInTiles
 		);
 		// offset to center of top-left tile
-		var startIndex = map.getTileIndexByCoords(FlxPoint.weak(start.x - offset.x, start.y - offset.y));
-		var endIndex   = map.getTileIndexByCoords(FlxPoint.weak(end.x   - offset.x, end.y   - offset.y));
+		final startIndex = map.getMapIndexAt(start.x - offset.x, start.y - offset.y);
+		final endIndex   = map.getMapIndexAt(end.x   - offset.x, end.y   - offset.y);
+		offset.put();
 
-		var data = createData(map, startIndex, endIndex);
-		var indices = findPathIndicesHelper(data);
+		final data = createData(map, startIndex, endIndex);
+		final indices = findPathIndicesHelper(data);
 		if (indices == null)
+		{
+			start.putWeak();
+			end.putWeak();
 			return null;
+		}
 
-		var path = getPathPointsFromIndices(data, indices);
+		final path = getPathPointsFromIndices(data, indices);
 
 		// Reset the start and end points to be exact
 		path[0].copyFrom(start);
@@ -45,14 +50,13 @@ class BigMoverPathfinder extends FlxDiagonalPathfinder
 
 		start.putWeak();
 		end.putWeak();
-		offset.put();
 
 		return path;
 	}
 
 	override function getPathPointsFromIndices(data:FlxPathfinderData, indices:Array<Int>):Array<FlxPoint>
 	{
-		var path = super.getPathPointsFromIndices(data, indices);
+		final path = super.getPathPointsFromIndices(data, indices);
 		final offset = FlxPoint.get(
 			(widthInTiles  - 1) / 2 * data.map.width  / data.map.widthInTiles,
 			(heightInTiles - 1) / 2 * data.map.height / data.map.heightInTiles

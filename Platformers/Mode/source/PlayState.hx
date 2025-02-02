@@ -1,19 +1,19 @@
 package;
 
-import flixel.effects.particles.FlxEmitter;
 import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxState;
+import flixel.effects.particles.FlxEmitter;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
+import flixel.system.FlxAssets;
 import flixel.text.FlxText;
 import flixel.tile.FlxTilemap;
-import flixel.system.FlxAssets;
 #if SHOW_FPS
-import openfl.display.FPS;
 import openfl.Lib;
+import openfl.display.FPS;
 #end
 
 /**
@@ -175,7 +175,7 @@ class PlayState extends FlxState
 			s.cameras = [FlxG.camera];
 		});
 
-		FlxG.sound.playMusic(FlxAssets.getSound("assets/sounds/mode"));
+		FlxG.sound.playMusic(AssetPaths.sounds.mode);
 
 		FlxG.cameras.flash(0xff131c1b);
 		_fading = false;
@@ -311,7 +311,7 @@ class PlayState extends FlxState
 						volume = 1.0;
 					}
 
-					FlxG.sound.play(FlxAssets.getSound("assets/sounds/countdown"), volume);
+					FlxG.sound.play(AssetPaths.sounds.countdown, volume);
 				}
 			}
 
@@ -341,19 +341,28 @@ class PlayState extends FlxState
 		// Escape to the main menu
 		#if FLX_KEYBOARD
 		if (FlxG.keys.pressed.ESCAPE)
-			FlxG.switchState(new MenuState());
+			FlxG.switchState(MenuState.new);
 		#end
 	}
 
 	/**
 	 * This is an overlap callback function, triggered by the calls to FlxG.overlap().
 	 */
-	function overlapped(Sprite1:FlxObject, Sprite2:FlxObject):Void
+	function overlapped(attacker:FlxObject, victim:FlxObject):Void
 	{
-		if ((Sprite1 is EnemyBullet) || (Sprite1 is Bullet))
-			Sprite1.kill();
+		if ((attacker is Bullet) || (attacker is EnemyBullet))
+		{
+			attacker.kill();
+		}
 
-		Sprite2.hurt(1);
+		if ((victim is IHurt))
+		{
+			(cast victim : IHurt).hurt(1);
+		}
+		else
+		{
+			victim.kill();
+		}
 	}
 
 	/**
@@ -363,7 +372,7 @@ class PlayState extends FlxState
 	{
 		// Reset the sounds for going inbetween the menu etc
 		FlxG.sound.destroy(true);
-		FlxG.switchState(new VictoryState());
+		FlxG.switchState(VictoryState.new);
 	}
 
 	/**

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://lime.software/project/1.0.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://lime.software/project/1.0.2 http://lime.software/xsd/project-1.0.2.xsd">
+<project xmlns="http://lime.openfl.org/project/1.0.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 
 	<app title="Calculator" file="Calculator" main="Main" version="0.0.1" company="" />
 	
 	<window background="#222222" fps="60" width="640" height="480"/>
-	<window orientation="portrait" resizable="false" if="web" />
+	<window orientation="portrait" resizable="true" if="web" />
 	<window orientation="landscape" fullscreen="false" hardware="true" vsync="false" if="flash" />
 	<window orientation="landscape" resizable="false" fullscreen="false" hardware="true" vsync="false" if="cpp" />
 	
@@ -20,6 +20,9 @@
 	<haxelib name="hscript" />
 	<haxelib name="firetongue" />
 
+	<!--Remove the legacy health system-->
+	<haxedef name="FLX_NO_HEALTH" />
+	
 	<!--<haxedef name="FLX_RECORD" />-->
 	<!--<haxedef name="FLX_NO_NATIVE_CURSOR" />-->
 	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />

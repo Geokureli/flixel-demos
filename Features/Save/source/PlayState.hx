@@ -32,7 +32,7 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		// Since we need the text before the usual end of the demo we'll initialize it up here.
-		_topText = new FlxText(0, 2, FlxG.width, "Welcome!");
+		_topText = new FlxText(0, 2, FlxG.width, "Welcome!", 16);
 		_topText.alignment = 'center';
 
 		// This just makes some dim text with instructions

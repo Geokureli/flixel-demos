@@ -25,7 +25,7 @@ class EnemyBullet extends FlxSprite
 			if (animation.finished)
 				exists = false;
 		}
-		else if (touching != 0)
+		else if (touching != NONE)
 		{
 			kill();
 		}
@@ -40,7 +40,7 @@ class EnemyBullet extends FlxSprite
 
 		velocity.set();
 		if (isOnScreen())
-			FlxG.sound.play(FlxAssets.getSound("assets/sounds/jump"));
+			FlxG.sound.play(AssetPaths.sounds.jump);
 
 		alive = false;
 		solid = false;
@@ -49,7 +49,7 @@ class EnemyBullet extends FlxSprite
 
 	public function shoot(Location:FlxPoint, angle:Float):Void
 	{
-		FlxG.sound.play(FlxAssets.getSound("assets/sounds/enemy"), 0.5);
+		FlxG.sound.play(AssetPaths.sounds.enemy, 0.5);
 
 		super.reset(Location.x - width / 2, Location.y - height / 2);
 		velocity.setPolarDegrees(speed, angle);

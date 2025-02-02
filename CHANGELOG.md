@@ -1,3 +1,59 @@
+3.3.1 (January 31, 2025)
+Fix warnings for the flixel 6.0.0 release ([374](https://github.com/HaxeFlixel/flixel-demos/pull/374))([375](https://github.com/HaxeFlixel/flixel-demos/pull/375))([376](https://github.com/HaxeFlixel/flixel-demos/pull/376))
+
+
+3.3.0 (January 24, 2025)
+- `FlxInputText`: New demo! ([#373](https://github.com/HaxeFlixel/flixel-demos/pull/373))
+- `FlxSpriteFilters`: Re-enable DisplacementFilters ([371](https://github.com/HaxeFlixel/flixel-demos/pull/371))
+3.2.1 (Dec 11, 2024)
+- Various changes to every Project.xml ([#359](https://github.com/HaxeFlixel/flixel-demos/pull/359))([#369](https://github.com/HaxeFlixel/flixel-demos/pull/369))
+- Add compatibility for 5.9.0 ([#351](https://github.com/HaxeFlixel/flixel-demos/pull/351))([#369](https://github.com/HaxeFlixel/flixel-demos/pull/369))
+- Add Turkish translation README ([#356](https://github.com/HaxeFlixel/flixel-demos/pull/356))
+- `FlxTilemapExt`: Fix bug when placing tiles ([#350](https://github.com/HaxeFlixel/flixel-demos/pull/350))
+- `Filters`: ([#367](https://github.com/HaxeFlixel/flixel-demos/pull/367))([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
+  - Fix game filters not applying
+  - Improve quality of filter params
+- `FlxSound`: add pitch ([#358](https://github.com/HaxeFlixel/flixel-demos/pull/358))
+- `CollisionAndGrouping`: Increase game size ([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
+- `FlxFSM`: add sounds ([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
+- `PixelPerfectCollision`: Cam's unknown, undocumented change, lol ([#357](https://github.com/HaxeFlixel/flixel-demos/pull/357))
+- `Save`: Increase size
+
+3.2.0 (May 1, 2024)
+- `FlxGameOfLife`: New demo! ([#342](https://github.com/HaxeFlixel/flixel-demos/pull/342))
+- `FlxLightPuzzle`: Bigger screen size ([#328](https://github.com/HaxeFlixel/flixel-demos/pull/328))
+- Compatibility with Flixel 6.0 dev branch ([#331](https://github.com/HaxeFlixel/flixel-demos/pull/331))
+- `PostProcess`: Removed demo ([#332](https://github.com/HaxeFlixel/flixel-demos/pull/332))
+- `MinimalistTD`: Change `Int` args to `FlxButtonState` ([#333](https://github.com/HaxeFlixel/flixel-demos/pull/333))
+- Compatibility with Flixel 5.7 ([#334](https://github.com/HaxeFlixel/flixel-demos/pull/334))
+- `FlxInvaders`: Add sound and music ([#335](https://github.com/HaxeFlixel/flixel-demos/pull/335))
+- `FlxSubstate`: renamed from `SubState` ([#339](https://github.com/HaxeFlixel/flixel-demos/pull/339))
+- `FlxAsepriteUtil`: renamed from `FlxAsepriteUtils` ([#347](https://github.com/HaxeFlixel/flixel-demos/pull/347))
+- `FlxFilterFrames`: fixed rotation and offsets ([#349](https://github.com/HaxeFlixel/flixel-demos/pull/349))
+- Remove .hxproj files
+
+3.1.0 (November 3, 2023)
+------------------------------
+- `FlxFSM`: fix jump after superjump pickup, add groundpound pickup ([#323](https://github.com/HaxeFlixel/flixel-demos/pull/323))
+- `FlxCamera`: Various changes ([#324](https://github.com/HaxeFlixel/flixel-demos/pull/324))
+   - add gamepad controls
+   - dynamic level sizing
+   - improve HUD and overlays
+   - reorganize code
+- `FlxAsepriteUtils`: New demo! ([#326](https://github.com/HaxeFlixel/flixel-demos/pull/326))
+
+3.0.0 (August 9, 2023)
+------------------------------
+- `FlxMouseEventManager`: Removed
+- `HeatmapPathfinder`: Make mobile-friendly [#321](https://github.com/HaxeFlixel/flixel-demos/pull/321)
+- `FlxPexParser`: Use HD particle, make mobile friendly [#320](https://github.com/HaxeFlixel/flixel-demos/pull/320)
+- `DynamicShadows`: Add blue tint to bg, make shadows flicker [#319](https://github.com/HaxeFlixel/flixel-demos/pull/319)
+- `MinimalistTD`: Fix overlapping buttons and recycled sprites [#309](https://github.com/HaxeFlixel/flixel-demos/pull/309)
+
+2.9.4 (August 7, 2023)
+------------------------------
+* Fix performance issues in DynamicShadows by using shaders
+
 2.9.3 (July 14, 2023)
 ------------------------------
 * Create "FlxMouseEvent" demo to replace "FlxMouseEventManager" (will remove old demo later)

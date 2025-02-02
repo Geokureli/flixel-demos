@@ -38,37 +38,37 @@ class MenuState extends FlxUIState
 		welcome.text = isStateA ? "STATE A" : "STATE B";
 		FlxG.camera.bgColor = isStateA ? 0xFFaa0000 : 0xFF0000ff;
 	}
-
+	
 	function init():Void
 	{
 		if (!initialized)
 		{
 			initialized = true;
-
+			
 			// If this is the first time we've run the program, we initialize the TransitionData
-
+			
 			// When we set the default static transIn/transOut values, on construction all
 			// FlxTransitionableStates will use those values if their own transIn/transOut states are null
 			FlxTransitionableState.defaultTransIn = new TransitionData();
 			FlxTransitionableState.defaultTransOut = new TransitionData();
-
+			
 			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
 			diamond.persist = true;
 			diamond.destroyOnNoUse = false;
-
+			
 			FlxTransitionableState.defaultTransIn.tileData = {asset: diamond, width: 32, height: 32};
 			FlxTransitionableState.defaultTransOut.tileData = {asset: diamond, width: 32, height: 32};
-
+			
 			// Of course, this state has already been constructed, so we need to set a transOut value for it right now:
 			transOut = FlxTransitionableState.defaultTransOut;
 			trace(transOut);
 		}
-
+		
 		// Now we just have the UI synchronize with the starting values:
 		matchTransitionData();
 		matchUI(false);
 	}
-
+	
 	function matchUI(matchData:Bool = true):Void
 	{
 		var in_duration:FlxUINumericStepper = cast _ui.getAsset("in_duration");
@@ -76,34 +76,34 @@ class MenuState extends FlxUIState
 		var in_tile:FlxUIRadioGroup = cast _ui.getAsset("in_tile");
 		var in_color:FlxUIRadioGroup = cast _ui.getAsset("in_color");
 		var in_dir:FlxUIRadioGroup = cast _ui.getAsset("in_dir");
-
+		
 		var out_duration:FlxUINumericStepper = cast _ui.getAsset("out_duration");
 		var out_type:FlxUIRadioGroup = cast _ui.getAsset("out_type");
 		var out_tile:FlxUIRadioGroup = cast _ui.getAsset("out_tile");
 		var out_color:FlxUIRadioGroup = cast _ui.getAsset("out_color");
 		var out_dir:FlxUIRadioGroup = cast _ui.getAsset("out_dir");
-
+		
 		FlxTransitionableState.defaultTransIn.color = FlxColor.fromString(in_color.selectedId);
 		FlxTransitionableState.defaultTransIn.type = cast in_type.selectedId;
 		setDirectionFromStr(in_dir.selectedId, FlxTransitionableState.defaultTransIn.direction);
 		FlxTransitionableState.defaultTransIn.duration = in_duration.value;
 		FlxTransitionableState.defaultTransIn.tileData.asset = getDefaultAsset(in_tile.selectedId);
-
+		
 		FlxTransitionableState.defaultTransOut.color = FlxColor.fromString(out_color.selectedId);
 		FlxTransitionableState.defaultTransOut.type = cast out_type.selectedId;
 		setDirectionFromStr(out_dir.selectedId, FlxTransitionableState.defaultTransOut.direction);
 		FlxTransitionableState.defaultTransOut.duration = out_duration.value;
 		FlxTransitionableState.defaultTransOut.tileData.asset = getDefaultAsset(out_tile.selectedId);
-
+		
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
-
+		
 		if (matchData)
 		{
 			matchTransitionData();
 		}
 	}
-
+	
 	function matchTransitionData():Void
 	{
 		var in_duration:FlxUINumericStepper = cast _ui.getAsset("in_duration");
@@ -112,14 +112,14 @@ class MenuState extends FlxUIState
 		var in_tile_text:FlxUIText = cast _ui.getAsset("in_tile_text");
 		var in_color:FlxUIRadioGroup = cast _ui.getAsset("in_color");
 		var in_dir:FlxUIRadioGroup = cast _ui.getAsset("in_dir");
-
+		
 		var out_duration:FlxUINumericStepper = cast _ui.getAsset("out_duration");
 		var out_type:FlxUIRadioGroup = cast _ui.getAsset("out_type");
 		var out_tile:FlxUIRadioGroup = cast _ui.getAsset("out_tile");
 		var out_tile_text:FlxUIText = cast _ui.getAsset("out_tile_text");
 		var out_color:FlxUIRadioGroup = cast _ui.getAsset("out_color");
 		var out_dir:FlxUIRadioGroup = cast _ui.getAsset("out_dir");
-
+		
 		in_duration.value = FlxTransitionableState.defaultTransIn.duration;
 		in_type.selectedId = cast FlxTransitionableState.defaultTransIn.type;
 		if (FlxTransitionableState.defaultTransIn.type == TILES)
@@ -142,7 +142,7 @@ class MenuState extends FlxUIState
 			case _: "black";
 		}
 		in_dir.selectedId = getDirection(cast FlxTransitionableState.defaultTransIn.direction.x, cast FlxTransitionableState.defaultTransIn.direction.y);
-
+		
 		out_duration.value = FlxTransitionableState.defaultTransOut.duration;
 		out_type.selectedId = cast FlxTransitionableState.defaultTransOut.type;
 		if (FlxTransitionableState.defaultTransOut.type == TILES)
@@ -155,7 +155,7 @@ class MenuState extends FlxUIState
 		{
 			out_tile_text.visible = out_tile.visible = false;
 		}
-
+		
 		out_color.selectedId = switch (FlxTransitionableState.defaultTransOut.color)
 		{
 			case FlxColor.RED: "red";
@@ -165,7 +165,7 @@ class MenuState extends FlxUIState
 			case FlxColor.GREEN: "green";
 			case _: "black";
 		}
-
+		
 		out_dir.selectedId = getDirection(cast FlxTransitionableState.defaultTransOut.direction.x, cast FlxTransitionableState.defaultTransOut.direction.y);
 	}
 
@@ -178,7 +178,7 @@ class MenuState extends FlxUIState
 			case GraphicTransTileDiamond, _: "diamond";
 		}
 	}
-
+	
 	function getDefaultAsset(str):FlxGraphic
 	{
 		var graphicClass:Class<Dynamic> = switch (str)
@@ -187,13 +187,13 @@ class MenuState extends FlxUIState
 			case "square": GraphicTransTileSquare;
 			case "diamond", _: GraphicTransTileDiamond;
 		}
-
+		
 		var graphic = FlxGraphic.fromClass(cast graphicClass);
 		graphic.persist = true;
 		graphic.destroyOnNoUse = false;
 		return graphic;
 	}
-
+	
 	function getDirection(ix:Int, iy:Int):String
 	{
 		if (ix < 0)
@@ -223,12 +223,12 @@ class MenuState extends FlxUIState
 		}
 		return "center";
 	}
-
+	
 	function setDirectionFromStr(str:String, ?p:FlxPoint):FlxPoint
 	{
 		if (p == null)
 			p = new FlxPoint();
-
+			
 		switch (str)
 		{
 			case "n":
@@ -252,12 +252,12 @@ class MenuState extends FlxUIState
 		}
 		return p;
 	}
-
+	
 	function transition():Void
 	{
-		FlxG.switchState(new MenuState(!isStateA));
+		FlxG.switchState(()->new MenuState(!isStateA));
 	}
-
+	
 	override public function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>):Void
 	{
 		switch (id)

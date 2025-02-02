@@ -7,7 +7,6 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.math.FlxPoint;
-import flixel.math.FlxVector;
 import flixel.math.FlxAngle;
 import flixel.util.FlxColor;
 import flixel.util.FlxCollision;
@@ -88,6 +87,9 @@ class PlayState extends FlxState
 		
 		updateSpriteAngles();
 		updateSpriteScales();
+
+		FlxG.camera.update(FlxG.elapsed);
+
 
 		// add objects for more interstellar fun!
 		for (i in 1...NUM_ALIENS)
