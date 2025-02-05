@@ -12,8 +12,8 @@ class Main extends Sprite
 		
 		Toolkit.init();
 		Toolkit.autoScale = false;
+		Toolkit.theme = "retro-block";
 		
-		// addChild(new FlxGame(640, 480, MenuState));
-		addChild(new FlxGame(640, 480, HaxeUIMenuState));
+		addChild(new FlxGame(640, 480, MenuState));
 	}
 }

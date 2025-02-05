@@ -1,281 +1,255 @@
 package;
 
-import flixel.system.FlxAssets;
 import flixel.FlxG;
+import flixel.math.FlxPoint;
+import flixel.graphics.FlxGraphic;
+import flixel.util.FlxColor;
+import flixel.util.FlxSignal;
+import flixel.addons.transition.TransitionData;
 import flixel.addons.transition.FlxTransitionSprite;
 import flixel.addons.transition.FlxTransitionableState;
-import flixel.addons.transition.TransitionData;
-import flixel.addons.ui.FlxUIButton;
-import flixel.addons.ui.FlxUINumericStepper;
-import flixel.addons.ui.FlxUIRadioGroup;
-import flixel.addons.ui.FlxUIState;
-import flixel.addons.ui.FlxUIText;
-import flixel.addons.ui.FlxUITypedButton;
-import flixel.graphics.FlxGraphic;
-import flixel.math.FlxPoint;
-import flixel.util.FlxColor;
-import openfl.display.BitmapData;
 
-class MenuState extends FlxUIState
+using flixel.util.FlxStringUtil;
+
+class MenuState extends FlxTransitionableState
 {
-	static var initialized:Bool = false;
-
 	final isStateA:Bool;
-
-	public function new(isStateA = true)
+	var mainUI:MainUI;
+	
+	public function new (isStateA = true)
 	{
-		this.isStateA = isStateA;
 		super();
-	}
-
-	override public function create():Void
-	{
-		_xml_id = "ui";
-		super.create();
-		init();
-
-		final welcome = cast(_ui.getAsset("welcome"), FlxUIText);
-		welcome.text = isStateA ? "STATE A" : "STATE B";
-		FlxG.camera.bgColor = isStateA ? 0xFFaa0000 : 0xFF0000ff;
+		this.isStateA = isStateA;
 	}
 	
-	function init():Void
+	override function create()
 	{
-		if (!initialized)
+		add(mainUI = new MainUI());
+		
+		FlxG.camera.bgColor = isStateA ? 0xFFff0000 : 0xFF0000ff;
+		mainUI.stateName.text = isStateA ? "State A" : "State B";
+		mainUI.start.onClick = (_)->
 		{
-			initialized = true;
-			
-			// If this is the first time we've run the program, we initialize the TransitionData
-			
-			// When we set the default static transIn/transOut values, on construction all
-			// FlxTransitionableStates will use those values if their own transIn/transOut states are null
-			FlxTransitionableState.defaultTransIn = new TransitionData();
-			FlxTransitionableState.defaultTransOut = new TransitionData();
-			
-			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
-			diamond.persist = true;
-			diamond.destroyOnNoUse = false;
-			
-			FlxTransitionableState.defaultTransIn.tileData = {asset: diamond, width: 32, height: 32};
-			FlxTransitionableState.defaultTransOut.tileData = {asset: diamond, width: 32, height: 32};
-			
-			// Of course, this state has already been constructed, so we need to set a transOut value for it right now:
+			mainUI.setData();
 			transOut = FlxTransitionableState.defaultTransOut;
-			trace(transOut);
+			FlxG.switchState(()->new MenuState(!isStateA));
 		}
 		
-		// Now we just have the UI synchronize with the starting values:
-		matchTransitionData();
-		matchUI(false);
+		// persistentUpdate = true;
+		// persistentDraw = true;
+		super.create();
 	}
 	
-	function matchUI(matchData:Bool = true):Void
+	override function update(elapsed:Float)
 	{
-		var in_duration:FlxUINumericStepper = cast _ui.getAsset("in_duration");
-		var in_type:FlxUIRadioGroup = cast _ui.getAsset("in_type");
-		var in_tile:FlxUIRadioGroup = cast _ui.getAsset("in_tile");
-		var in_color:FlxUIRadioGroup = cast _ui.getAsset("in_color");
-		var in_dir:FlxUIRadioGroup = cast _ui.getAsset("in_dir");
-		
-		var out_duration:FlxUINumericStepper = cast _ui.getAsset("out_duration");
-		var out_type:FlxUIRadioGroup = cast _ui.getAsset("out_type");
-		var out_tile:FlxUIRadioGroup = cast _ui.getAsset("out_tile");
-		var out_color:FlxUIRadioGroup = cast _ui.getAsset("out_color");
-		var out_dir:FlxUIRadioGroup = cast _ui.getAsset("out_dir");
-		
-		FlxTransitionableState.defaultTransIn.color = FlxColor.fromString(in_color.selectedId);
-		FlxTransitionableState.defaultTransIn.type = cast in_type.selectedId;
-		setDirectionFromStr(in_dir.selectedId, FlxTransitionableState.defaultTransIn.direction);
-		FlxTransitionableState.defaultTransIn.duration = in_duration.value;
-		FlxTransitionableState.defaultTransIn.tileData.asset = getDefaultAsset(in_tile.selectedId);
-		
-		FlxTransitionableState.defaultTransOut.color = FlxColor.fromString(out_color.selectedId);
-		FlxTransitionableState.defaultTransOut.type = cast out_type.selectedId;
-		setDirectionFromStr(out_dir.selectedId, FlxTransitionableState.defaultTransOut.direction);
-		FlxTransitionableState.defaultTransOut.duration = out_duration.value;
-		FlxTransitionableState.defaultTransOut.tileData.asset = getDefaultAsset(out_tile.selectedId);
-		
-		transIn = FlxTransitionableState.defaultTransIn;
-		transOut = FlxTransitionableState.defaultTransOut;
-		
-		if (matchData)
-		{
-			matchTransitionData();
-		}
+		super.update(elapsed);
 	}
 	
-	function matchTransitionData():Void
+	override function transitionIn()
 	{
-		var in_duration:FlxUINumericStepper = cast _ui.getAsset("in_duration");
-		var in_type:FlxUIRadioGroup = cast _ui.getAsset("in_type");
-		var in_tile:FlxUIRadioGroup = cast _ui.getAsset("in_tile");
-		var in_tile_text:FlxUIText = cast _ui.getAsset("in_tile_text");
-		var in_color:FlxUIRadioGroup = cast _ui.getAsset("in_color");
-		var in_dir:FlxUIRadioGroup = cast _ui.getAsset("in_dir");
-		
-		var out_duration:FlxUINumericStepper = cast _ui.getAsset("out_duration");
-		var out_type:FlxUIRadioGroup = cast _ui.getAsset("out_type");
-		var out_tile:FlxUIRadioGroup = cast _ui.getAsset("out_tile");
-		var out_tile_text:FlxUIText = cast _ui.getAsset("out_tile_text");
-		var out_color:FlxUIRadioGroup = cast _ui.getAsset("out_color");
-		var out_dir:FlxUIRadioGroup = cast _ui.getAsset("out_dir");
-		
-		in_duration.value = FlxTransitionableState.defaultTransIn.duration;
-		in_type.selectedId = cast FlxTransitionableState.defaultTransIn.type;
-		if (FlxTransitionableState.defaultTransIn.type == TILES)
+		// copied from super so we can delay start until mainUI is ready
+		if (transIn != null && transIn.type != NONE)
 		{
-			in_tile_text.visible = in_tile.visible = true;
-			var inTileAsset:FlxGraphic = cast FlxTransitionableState.defaultTransIn.tileData.asset;
-			in_tile.selectedId = getDefaultAssetStr(inTileAsset);
-		}
-		else
-		{
-			in_tile_text.visible = in_tile.visible = false;
-		}
-		in_color.selectedId = switch (FlxTransitionableState.defaultTransIn.color)
-		{
-			case FlxColor.RED: "red";
-			case FlxColor.WHITE: "white";
-			case FlxColor.BLUE: "blue";
-			case FlxColor.BLACK: "black";
-			case FlxColor.GREEN: "green";
-			case _: "black";
-		}
-		in_dir.selectedId = getDirection(cast FlxTransitionableState.defaultTransIn.direction.x, cast FlxTransitionableState.defaultTransIn.direction.y);
-		
-		out_duration.value = FlxTransitionableState.defaultTransOut.duration;
-		out_type.selectedId = cast FlxTransitionableState.defaultTransOut.type;
-		if (FlxTransitionableState.defaultTransOut.type == TILES)
-		{
-			out_tile_text.visible = out_tile.visible = true;
-			var outTileAsset:FlxGraphic = cast FlxTransitionableState.defaultTransOut.tileData.asset;
-			out_tile.selectedId = getDefaultAssetStr(outTileAsset);
-		}
-		else
-		{
-			out_tile_text.visible = out_tile.visible = false;
-		}
-		
-		out_color.selectedId = switch (FlxTransitionableState.defaultTransOut.color)
-		{
-			case FlxColor.RED: "red";
-			case FlxColor.WHITE: "white";
-			case FlxColor.BLUE: "blue";
-			case FlxColor.BLACK: "black";
-			case FlxColor.GREEN: "green";
-			case _: "black";
-		}
-		
-		out_dir.selectedId = getDirection(cast FlxTransitionableState.defaultTransOut.direction.x, cast FlxTransitionableState.defaultTransOut.direction.y);
-	}
-
-	function getDefaultAssetStr(graphic:FlxGraphic):String
-	{
-		return switch (graphic.assetsClass)
-		{
-			case GraphicTransTileCircle: "circle";
-			case GraphicTransTileSquare: "square";
-			case GraphicTransTileDiamond, _: "diamond";
-		}
-	}
-	
-	function getDefaultAsset(str):FlxGraphic
-	{
-		var graphicClass:Class<Dynamic> = switch (str)
-		{
-			case "circle": GraphicTransTileCircle;
-			case "square": GraphicTransTileSquare;
-			case "diamond", _: GraphicTransTileDiamond;
-		}
-		
-		var graphic = FlxGraphic.fromClass(cast graphicClass);
-		graphic.persist = true;
-		graphic.destroyOnNoUse = false;
-		return graphic;
-	}
-	
-	function getDirection(ix:Int, iy:Int):String
-	{
-		if (ix < 0)
-		{
-			if (iy == 0)
-				return "w";
-			if (iy > 0)
-				return "sw";
-			if (iy < 0)
-				return "nw";
-		}
-		else if (ix > 0)
-		{
-			if (iy == 0)
-				return "e";
-			if (iy > 0)
-				return "se";
-			if (iy < 0)
-				return "ne";
-		}
-		else if (ix == 0)
-		{
-			if (iy > 0)
-				return "s";
-			if (iy < 0)
-				return "n";
-		}
-		return "center";
-	}
-	
-	function setDirectionFromStr(str:String, ?p:FlxPoint):FlxPoint
-	{
-		if (p == null)
-			p = new FlxPoint();
-			
-		switch (str)
-		{
-			case "n":
-				p.set(0, -1);
-			case "s":
-				p.set(0, 1);
-			case "w":
-				p.set(-1, 0);
-			case "e":
-				p.set(1, 0);
-			case "nw":
-				p.set(-1, -1);
-			case "ne":
-				p.set(1, -1);
-			case "sw":
-				p.set(-1, 1);
-			case "se":
-				p.set(1, 1);
-			default:
-				p.set(0, 0);
-		}
-		return p;
-	}
-	
-	function transition():Void
-	{
-		FlxG.switchState(()->new MenuState(!isStateA));
-	}
-	
-	override public function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>):Void
-	{
-		switch (id)
-		{
-			case FlxUITypedButton.CLICK_EVENT:
-				var butt:FlxUIButton = cast sender;
-				if (butt.name == "transition")
+			if (FlxTransitionableState.skipNextTransIn)
+			{
+				FlxTransitionableState.skipNextTransIn = false;
+				if (finishTransIn != null)
 				{
-					matchUI();
-					transition();
+					finishTransIn();
 				}
-			case FlxUIRadioGroup.CLICK_EVENT:
-				var radio:FlxUIRadioGroup = cast sender;
-				if (!radio.visible)
-					return;
-				matchUI();
-			case FlxUINumericStepper.CHANGE_EVENT:
-				matchUI();
+				return;
+			}
+			
+			var _trans = createTransition(transIn);
+			
+			_trans.setStatus(FULL);
+			openSubState(_trans);
+			
+			_trans.finishCallback = finishTransIn;
+			
+			// delay start for ui
+			// mainUI.hidden = true;
+			// if (mainUI.initComplete)
+				_trans.start(OUT);
+			// else
+			// 	mainUI.onInitComplete.addOnce(()->_trans.start(OUT));
 		}
+	}
+	
+	// override function finishTransIn()
+	// {
+	// 	mainUI.fadeIn();
+	// }
+	
+	// override function transitionOut(?onExit:()->Void)
+	// {
+	// 	mainUI.fadeOut(()->onUIFadeOutComplete(onExit));
+	// }
+	
+	function onUIFadeOutComplete(onExit:()->Void)
+	{
+		super.transitionOut(onExit);
+	}
+}
+
+@:build(haxe.ui.ComponentBuilder.build("assets/xml/ui.xml"))
+class MainUI extends haxe.ui.containers.Box
+{
+	static inline var defaultColor:FlxColor = 0xFF000000;
+	
+	public var initComplete = false;
+	public var onInitComplete = new FlxSignal();
+	
+	override function onReady()
+	{
+		super.onReady();
+		
+		if (FlxTransitionableState.defaultTransIn != null)
+		{
+			final inData = FlxTransitionableState.defaultTransIn;
+			durationIn.pos = inData.duration;
+			directionIn.selectedItem = Direction.fromPoint(inData.direction);
+			typeIn.selectedItem = FlxStringUtil.toTitleCase(cast inData.type);
+			tileIn.selectedItem = TileType.fromData(inData.tileData);
+			colorIn.selectedItem = inData.color.rgb;
+		}
+		else
+			colorIn.selectedItem = defaultColor.rgb;
+		
+		if (FlxTransitionableState.defaultTransOut != null)
+		{
+			final outData = FlxTransitionableState.defaultTransOut;
+			durationOut.pos = outData.duration;
+			directionOut.selectedItem = Direction.fromPoint(outData.direction);
+			typeOut.selectedItem = FlxStringUtil.toTitleCase(cast outData.type);
+			tileOut.selectedItem = TileType.fromData(outData.tileData);
+			colorOut.selectedItem = outData.color.rgb;
+		}
+		else
+			colorOut.selectedItem = defaultColor.rgb;
+		
+		initComplete = true;
+		onInitComplete.dispatch();
+	}
+	
+	public function setData()
+	{
+		if (FlxTransitionableState.defaultTransIn == null)
+			FlxTransitionableState.defaultTransIn = new TransitionData(FADE, defaultColor, 1.0, FlxPoint.get(), TileData.diamond);
+		
+		if (FlxTransitionableState.defaultTransOut == null)
+			FlxTransitionableState.defaultTransOut = new TransitionData(FADE, defaultColor, 1.0, FlxPoint.get(), TileData.diamond);
+		
+		final inData = FlxTransitionableState.defaultTransIn;
+		inData.duration = durationIn.pos;
+		Direction.setPoint(directionIn.selectedItem.text, inData.direction);
+		inData.type = typeIn.selectedItem.value;
+		inData.tileData = TileData.fromType(tileIn.selectedItem.text);
+		inData.color = 0xFF000000 | colorIn.selectedItem;
+		
+		final outData = FlxTransitionableState.defaultTransOut;
+		outData.duration = durationOut.pos;
+		Direction.setPoint(directionOut.selectedItem.text, outData.direction);
+		outData.type = typeOut.selectedItem.value;
+		outData.tileData = TileData.fromType(tileOut.selectedItem.text);
+		outData.color = 0xFF000000 | colorOut.selectedItem;
+	}
+}
+
+enum abstract TileType(String) from String
+{
+	var DIAMOND = "Diamond";
+	var CIRCLE = "Circle";
+	var SQUARE = "Square";
+	
+	public function toData()
+	{
+		return switch(this:TileType)
+		{
+			case DIAMOND: TileData.diamond;
+			case CIRCLE: TileData.circle;
+			case SQUARE: TileData.square;
+			case type: throw 'Invalid type: $type';
+		}
+	}
+	
+	public static inline function fromData(data:TileData)
+	{
+		return data.toType();
+	}
+}
+
+abstract TileData(TransitionTileData) to TransitionTileData from TransitionTileData
+{
+	public static inline var DIAMOND_ASSET = 'flixel/images/transitions/diamond.png';
+	public static inline var CIRCLE_ASSET = 'flixel/images/transitions/circle.png';
+	public static inline var SQUARE_ASSET = 'flixel/images/transitions/square.png';
+	
+	public static var diamond = { asset:DIAMOND_ASSET, width:32, height:32 };
+	public static var circle = { asset:CIRCLE_ASSET, width:32, height:32 };
+	public static var square = { asset:SQUARE_ASSET, width:32, height:32 };
+	
+	public static inline function fromType(type:TileType)
+	{
+		return type.toData();
+	}
+	
+	public function toType()
+	{
+		return switch(this.asset)
+		{
+			case DIAMOND_ASSET: TileType.DIAMOND;
+			case CIRCLE_ASSET: TileType.CIRCLE;
+			case SQUARE_ASSET: TileType.SQUARE;
+			case asset: throw 'Invalid asset: $asset';
+		}
+	}
+}
+
+enum abstract Direction(String) from String
+{
+	var NONE = "None";
+	var DOWN = "Down";
+	var DOWN_LEFT = "Down-Left";
+	var DOWN_RIGHT = "Down-Right";
+	var UP = "Up";
+	var UP_LEFT = "Up-Left";
+	var UP_RIGHT = "Up-Right";
+	var RIGHT = "Right";
+	var LEFT = "Left";
+	
+	public function getPoint(p:FlxPoint)
+	{
+		return switch(this:Direction)
+		{
+			case NONE      : p.set( 0,  0);
+			case DOWN      : p.set( 0,  1);
+			case DOWN_LEFT : p.set(-1,  1);
+			case DOWN_RIGHT: p.set( 1,  1);
+			case UP        : p.set( 0, -1);
+			case UP_LEFT   : p.set(-1, -1);
+			case UP_RIGHT  : p.set( 1, -1);
+			case RIGHT     : p.set( 1,  0);
+			case LEFT      : p.set(-1,  0);
+		}
+	}
+	
+	public static function setPoint(direction:Direction, p:FlxPoint)
+	{
+		direction.getPoint(p);
+	}
+	
+	public static function fromPoint(p:FlxPoint)
+	{
+		if(p.x == 0 && p.y == 0) return NONE;
+		if(p.x == 0 && p.y >  0) return DOWN;
+		if(p.x <  0 && p.y >  0) return DOWN_LEFT;
+		if(p.x >  0 && p.y >  0) return DOWN_RIGHT;
+		if(p.x == 0 && p.y <  0) return UP;
+		if(p.x <  0 && p.y <  0) return UP_LEFT;
+		if(p.x >  0 && p.y <  0) return UP_RIGHT;
+		if(p.x >  0 && p.y == 0) return RIGHT;
+		if(p.x <  0 && p.y == 0) return LEFT;
+		throw "invalid point: " + p;
 	}
 }
