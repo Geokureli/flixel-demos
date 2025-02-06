@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<box width="100%" height="100%" style="padding: 30px; border-style: solid; border-width: 1px">
+	<vbox width="100%" height="100%" horizontalAlign="center">
+		<!-- HEADER -->
+		<label text="State A" id="stateName" style="font-size:32px" horizontalAlign="center"/>
+		<box height="150"/>
+		<hbox width="100%">
+			<!-- IN -->
+			<transitionview width="50%" text="In" id="viewIn"/>
+			<box width="50"/>
+			<!-- OUT -->
+			<transitionview width="50%" text="Out" id="viewOut"/>
+		</hbox>
+		<box height="25"/>
+		<button id="start" text="Start Transition" style="font-size:16px" width="200" height="40" horizontalAlign="center"/>
+	</vbox>
+</box>

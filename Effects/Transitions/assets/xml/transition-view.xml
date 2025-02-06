@@ -1,0 +1,51 @@
+<frame>
+    <vbox style="padding: 5px" width="100%">
+        <!-- DURATION -->
+        <hbox width="100%" tooltip="How long, in seconds, it takes to transition in">
+            <label text="Duration" width="60" verticalAlign="center"/>
+            <number-stepper id="duration" width="100%" pos="1" step=".1" min="0.1" max="10" precision="2"/>
+        </hbox>
+        <!-- TYPE/TILE -->
+        <hbox width="100%" tooltip="The type of transition to use">
+            <label text="Type" width="60" verticalAlign="center"/>
+            <!-- TYPE -->
+            <dropdown id="type" width="50%" onChange="tile.hidden = type.selectedItem.text != 'Tiles'">
+                <data>
+                    <item text="Fade" value="fade"/>
+                    <item text="Tiles" value="tiles"/>
+                    <item text="None" value="none"/>
+                </data>
+            </dropdown>
+            <!-- TILE -->
+            <dropdown id="tile" width="50%" tooltip="The graphic to tile">
+                <data>
+                    <item text="Square"/>
+                    <item text="Circle"/>
+                    <item text="Diamond"/>
+                </data>
+            </dropdown>
+        </hbox>
+        <!-- COLOR -->
+        <hbox width="100%" tooltip="The color of the transition">
+            <label text="Color" width="60" verticalAlign="center"/>
+            <color-picker-popup id="colorPicker" width="100%" handlerStyleNames="no-controls"/>
+        </hbox>
+        <!-- DIRECTION -->
+        <hbox width="100%" tooltip="The direction of the transition">
+            <label text="Direction" width="60" verticalAlign="center"/>
+            <dropdown id="direction" width="100%">
+                <data>
+                    <item text="None"/>
+                    <item text="Down-Right"/>
+                    <item text="Down-Left"/>
+                    <item text="Up-Right"/>
+                    <item text="Up-Left"/>
+                    <item text="Right"/>
+                    <item text="Left"/>
+                    <item text="Down"/>
+                    <item text="Up"/>
+                </data>
+            </dropdown>
+        </hbox>
+    </vbox>
+</frame>
