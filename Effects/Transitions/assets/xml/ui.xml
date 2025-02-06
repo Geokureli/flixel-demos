@@ -35,8 +35,8 @@
 					</hbox>
 					<!-- COLOR -->
 					<hbox width="100%" tooltip="The color of the transition">
-						<label text="Color" width="60" verticalAlign="center" styleName="no-controls"/>
-						<color-picker-popup id="colorIn" width="100%"/>
+						<label text="Color" width="60" verticalAlign="center"/>
+						<color-picker-popup id="colorIn" width="100%" handlerStyleNames="no-controls"/>
 					</hbox>
 					<!-- DIRECTION -->
 					<hbox width="100%" tooltip="The direction of the transition">
@@ -89,7 +89,7 @@
 					<!-- COLOR -->
 					<hbox width="100%" tooltip="The color of the transition">
 						<label text="Color" width="60" verticalAlign="center"/>
-						<color-picker-popup id="colorOut" width="100%" styleName="no-controls"/>
+						<color-picker-popup id="colorOut" width="100%" handlerStyleNames="no-controls"/>
 					</hbox>
 					<!-- DIRECTION -->
 					<hbox width="100%" tooltip="The direction of the transition">
