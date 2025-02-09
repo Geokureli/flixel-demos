@@ -8,7 +8,7 @@
     height: auto;
     width: auto;
     clip: true;
-    background-image: "haxeui-retro-block/styles/images/tabbar_bg.png";
+    background-image: "retro_block/images/tabbar_bg.png";
     background-image-clip: 0px 0px 18px 18px;
     background-image-slice: 5px 5px 13px 13px;
 }
@@ -19,7 +19,7 @@
 }
 
 .tabbar-button {
-    background-image: "haxeui-retro-block/styles/images/tabbar.png";
+    background-image: "retro_block/images/tabbar.png";
     background-image-clip: 18px 0px 36px 18px;
     background-image-slice: 5px 5px 13px 13px;
 
@@ -30,13 +30,13 @@
 }
 
 .tabbar-button:hover {
-    background-image: "haxeui-retro-block/styles/images/tabbar.png";
+    background-image: "retro_block/images/tabbar.png";
     background-image-clip: 18px 0px 36px 18px;
     background-image-slice: 5px 5px 13px 13px;
 }
 
 .tabbar-button-selected {
-    background-image: "haxeui-retro-block/styles/images/tabbar.png";
+    background-image: "retro_block/images/tabbar.png";
     background-image-clip: 0px 0px 18px 18px;
     background-image-slice: 5px 5px 13px 13px;
 }
@@ -55,7 +55,7 @@
 }
 
 .tabview > .tabview-content {
-    background-image: "haxeui-retro-block/styles/images/tabview_bg.png";
+    background-image: "retro_block/images/tabview_bg.png";
     background-image-clip: 0px 0px 18px 18px;
     background-image-slice: 5px 5px 13px 13px;
     
@@ -68,31 +68,31 @@
 ** TABBAR (BOTTOM)
 *************************************************************************/
 .tabbar:bottom {
-    background-image: "haxeui-retro-block/styles/images/tabbar_bg_bottom.png";
+    background-image: "retro_block/images/tabbar_bg_bottom.png";
     background-image-clip: 0px 0px 18px 18px;
     background-image-slice: 5px 5px 13px 13px;
 }
 
 .tabbar:bottom .tabbar-button {
-    background-image: "haxeui-retro-block/styles/images/tabbar_bottom.png";
+    background-image: "retro_block/images/tabbar_bottom.png";
     background-image-clip: 18px 0px 36px 18px;
     background-image-slice: 5px 5px 13px 13px;
 }
 
 .tabbar:bottom .tabbar-button:hover {
-    background-image: "haxeui-retro-block/styles/images/tabbar_bottom.png";
+    background-image: "retro_block/images/tabbar_bottom.png";
     background-image-clip: 18px 0px 36px 18px;
     background-image-slice: 5px 5px 13px 13px;
 }
 
 .tabbar:bottom .tabbar-button-selected {
-    background-image: "haxeui-retro-block/styles/images/tabbar_bottom.png";
+    background-image: "retro_block/images/tabbar_bottom.png";
     background-image-clip: 0px 0px 18px 18px;
     background-image-slice: 5px 5px 13px 13px;
 }
 
 .tabview:bottom > .tabview-content {
-    background-image: "haxeui-retro-block/styles/images/tabview_bg_bottom.png";
+    background-image: "retro_block/images/tabview_bg_bottom.png";
     background-image-clip: 0px 0px 18px 18px;
     background-image-slice: 5px 5px 13px 13px;
 }

@@ -4,7 +4,7 @@
 }
 
 .checkbox-value {
-    background-image: "haxeui-retro-block/styles/images/checkbox.png";
+    background-image: "retro_block/images/checkbox.png";
     background-image-clip: 0px 0px 11px 11px;
     
     border: none;
@@ -26,7 +26,7 @@
 }
 
 .optionbox-value {
-    background-image: "haxeui-retro-block/styles/images/optionbox.png";
+    background-image: "retro_block/images/optionbox.png";
     background-image-clip: 0px 0px 11px 11px;
     
     border: none;

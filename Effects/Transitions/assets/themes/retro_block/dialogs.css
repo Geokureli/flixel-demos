@@ -1,5 +1,5 @@
 .dialog {
-    background-image: "haxeui-retro-block/styles/images/button.png";
+    background-image: "retro_block/images/button.png";
     background-image-clip: 0px 0px 18px 18px;
     background-image-slice: 5px 5px 13px 13px;
 
@@ -9,7 +9,7 @@
 }
 
 .dialog-close-button {
-    resource: "haxeui-retro-block/styles/images/close.png";
+    resource: "retro_block/images/close.png";
 }
 
 .dialog-title {
