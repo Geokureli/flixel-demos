@@ -1,14 +1,11 @@
 package components;
 
+import debug.StyleWindow;
+
 import flixel.FlxG;
-import flixel.math.FlxPoint;
-import flixel.graphics.FlxGraphic;
-import flixel.util.FlxColor;
+import flixel.addons.transition.FlxTransitionableState.defaultTransIn;
+import flixel.addons.transition.FlxTransitionableState.defaultTransOut;
 import flixel.util.FlxSignal;
-import flixel.util.FlxStringUtil;
-import flixel.addons.transition.TransitionData;
-import flixel.addons.transition.FlxTransitionSprite;
-import flixel.addons.transition.FlxTransitionableState;
 
 
 @:build(haxe.ui.ComponentBuilder.build("assets/xml/main-view.xml"))
@@ -21,19 +18,28 @@ class MainView extends haxe.ui.containers.Box
 	{
 		super.onReady();
 		
-		if (FlxTransitionableState.defaultTransIn != null)
-			viewIn.setData(FlxTransitionableState.defaultTransIn);
+		if (defaultTransIn != null)
+			viewIn.setData(defaultTransIn);
 		
-		if (FlxTransitionableState.defaultTransOut != null)
-			viewOut.setData(FlxTransitionableState.defaultTransOut);
+		if (defaultTransOut != null)
+			viewOut.setData(defaultTransOut);
 		
 		initComplete = true;
 		onInitComplete.dispatch();
+		
+		#if FLX_DEBUG
+		final tool = new UIStyleTool(this);
+		FlxG.debugger.tools.add(tool);
+		FlxG.signals.preStateSwitch.addOnce(()->FlxG.debugger.tools.remove(tool));
+		
+		// for (i in 0...20)
+		// 	FlxG.watch.addQuick('$i', i);
+		#end
 	}
 	
 	public function setData()
 	{
-		FlxTransitionableState.defaultTransIn = viewIn.getData(FlxTransitionableState.defaultTransIn);
-		FlxTransitionableState.defaultTransOut = viewOut.getData(FlxTransitionableState.defaultTransOut);
+		defaultTransIn = viewIn.getData(defaultTransIn);
+		defaultTransOut = viewOut.getData(defaultTransOut);
 	}
 }

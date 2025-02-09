@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <module id="haxeui-theme-retro-block">
-    <!-- <resources>
+    <resources>
         <resource path="/assets/themes/retro_block/_module/styles" prefix="haxeui-retro-block/styles" />
     </resources>
     
@@ -22,7 +22,7 @@
             <style resource="haxeui-retro-block/styles/tableviews.css" />
             <style resource="haxeui-retro-block/styles/frames.css" />
         </retro-block>
-    </themes> -->
+    </themes>
     
     <components>
         <component package="components" />
