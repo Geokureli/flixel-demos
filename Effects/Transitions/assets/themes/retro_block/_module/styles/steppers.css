@@ -1,36 +1,39 @@
-.numberstepper {
-    padding: 0px;
+.option-stepper, .number-stepper {
+    padding: -1px;
     spacing: 0;
+
+    background-image: "haxeui-retro-block/styles/images/inset_thin.png";
+    background-image-clip: 0px 0px 18px 18px;
+    background-image-slice: 5px 5px 13px 13px;
 }
 
 .stepper {
     spacing: 0;
+    padding: 0px;
 }
 
 .stepper-inc {
-    icon: "haxeui-retro-block/styles/images/up_arrow.png";
+    icon: "haxeui-retro-block/styles/images/right_arrow.png";
 }
 
 .stepper-deinc {
-    icon: "haxeui-retro-block/styles/images/down_arrow.png";
+    icon: "haxeui-retro-block/styles/images/left_arrow.png";
 }
 
 .stepper-inc:down {
-    icon: "haxeui-retro-block/styles/images/up_arrow.png";
+    icon: "haxeui-retro-block/styles/images/right_arrow.png";
 }
 
 .stepper-deinc:down {
-    icon: "haxeui-retro-block/styles/images/down_arrow.png";
+    icon: "haxeui-retro-block/styles/images/left_arrow.png";
 }
 
 .stepper-button {
     padding: 3px;
 }
 
-
-.stepper-textfield, .stepper-textfield:active {
-    background-image: "haxeui-retro-block/styles/images/inset_thin.png";
-    background-image-clip: 0px 0px 18px 18px;
-    background-image-slice: 5px 5px 13px 13px;
+.number-stepper .textfield, .number-stepper .textfield:active {
+    background-image: none;
+    border: none;
 }
 

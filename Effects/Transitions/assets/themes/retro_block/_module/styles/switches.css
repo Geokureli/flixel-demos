@@ -1,0 +1,24 @@
+.switch {
+    padding: -1px;
+    spacing: 0;
+}
+
+.switch-button-sub {
+    cursor: pointer;
+    initial-width: 22px;
+    initial-height: 11px;
+    background-image: "haxeui-retro-block/styles/images/transparent_box.png";
+    background-image-clip: 0px 0px 18px 18px;
+    background-image-slice: 5px 5px 13px 13px;
+}
+
+@keyframes switchAnimateSelected {
+    0% {
+        pos: 0;
+        background-color: #ffffff;
+    }
+    100% {
+        pos: 100;
+        background-color: #5994FF;
+    }
+}
