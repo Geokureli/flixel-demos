@@ -1,6 +1,6 @@
 package components;
 
-import debug.StyleWindow;
+import editor.StyleWindow;
 
 import flixel.FlxG;
 import flixel.addons.transition.FlxTransitionableState.defaultTransIn;
