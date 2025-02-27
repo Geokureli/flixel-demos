@@ -1,6 +1,6 @@
 package components;
 
-import editor.StyleWindow;
+// import editor.StyleWindow;
 
 import flixel.FlxG;
 import flixel.addons.transition.FlxTransitionableState.defaultTransIn;
@@ -27,14 +27,14 @@ class MainView extends haxe.ui.containers.Box
 		initComplete = true;
 		onInitComplete.dispatch();
 		
-		#if FLX_DEBUG
-		final tool = new UIStyleTool(this);
-		FlxG.debugger.tools.add(tool);
-		FlxG.signals.preStateSwitch.addOnce(()->FlxG.debugger.tools.remove(tool));
+		// #if FLX_DEBUG
+		// final tool = new UIStyleTool(this);
+		// FlxG.debugger.tools.add(tool);
+		// FlxG.signals.preStateSwitch.addOnce(()->FlxG.debugger.tools.remove(tool));
 		
-		// for (i in 0...20)
-		// 	FlxG.watch.addQuick('$i', i);
-		#end
+		// // for (i in 0...20)
+		// // 	FlxG.watch.addQuick('$i', i);
+		// #end
 	}
 	
 	public function setData()
