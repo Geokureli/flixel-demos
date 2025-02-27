@@ -1,0 +1,14 @@
+.label, .button {
+    color: black;
+    font-name: "flixel/fonts/nokiafc22.ttf";
+    font-size: 8px;
+}
+
+.textfield, .textarea {
+    font-name: "flixel/fonts/nokiafc22.ttf";
+    font-size: 8px;
+}
+
+.tooltip {
+    border: 1px solid black;
+}

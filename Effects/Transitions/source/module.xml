@@ -2,6 +2,7 @@
 <module id="haxeui-theme-retro-block">
     <resources>
         <resource path="/assets/themes/retro_block/" prefix="retro_block" />
+        <resource path="/assets/themes/kenney_grey/" prefix="kenney_grey" />
     </resources>
     
     <themes>
@@ -22,6 +23,23 @@
             <style resource="retro_block/tableviews.css" />
             <style resource="retro_block/frames.css" />
         </retro-block>
+        <kenney-grey parent="default">
+            <style resource="kenney_grey/main.css" />
+            <style resource="kenney_grey/buttons.css" />
+            <style resource="kenney_grey/checkboxes.css" />
+            <style resource="kenney_grey/textfields.css" />
+            <style resource="kenney_grey/steppers.css" />
+            <style resource="kenney_grey/dropdowns.css" />
+            <style resource="kenney_grey/ranges.css" />
+            <style resource="kenney_grey/scrolls.css" />
+            <style resource="kenney_grey/tabs.css" />
+            <style resource="kenney_grey/dialogs.css" />
+            <style resource="kenney_grey/propertygrids.css" />
+            <style resource="kenney_grey/menus.css" />
+            <style resource="kenney_grey/listviews.css" />
+            <style resource="kenney_grey/tableviews.css" />
+            <style resource="kenney_grey/frames.css" />
+        </kenney-grey>
     </themes>
     
     <components>

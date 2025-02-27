@@ -1,0 +1,39 @@
+.option-stepper, .number-stepper {
+    padding: -1px;
+    spacing: 0;
+
+    background-image: "kenney_grey/images/inset_thin.png";
+    background-image-clip: 0px 0px 18px 18px;
+    background-image-slice: 5px 5px 13px 13px;
+}
+
+.stepper {
+    spacing: 0;
+    padding: 0px;
+}
+
+.stepper-inc {
+    icon: "kenney_grey/images/right_arrow.png";
+}
+
+.stepper-deinc {
+    icon: "kenney_grey/images/left_arrow.png";
+}
+
+.stepper-inc:down {
+    icon: "kenney_grey/images/right_arrow.png";
+}
+
+.stepper-deinc:down {
+    icon: "kenney_grey/images/left_arrow.png";
+}
+
+.stepper-button {
+    padding: 3px;
+}
+
+.number-stepper .textfield, .number-stepper .textfield:active {
+    background-image: none;
+    border: none;
+}
+
