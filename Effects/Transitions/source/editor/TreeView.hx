@@ -4,6 +4,7 @@ import editor.ComponentTools;
 import flixel.FlxG;
 import flixel.system.FlxAssets;
 import flixel.system.debug.DebuggerUtil;
+import flixel.system.debug.ScrollSprite;
 import flixel.system.debug.watch.Watch;
 import flixel.system.ui.FlxSystemButton;
 import flixel.util.FlxDestroyUtil;
@@ -343,7 +344,9 @@ class TreeView extends ScrollSprite
 	override function onMouseScroll(e:MouseEvent)
 	{
 		super.onMouseScroll(e);
-		onMouseMove(e);
+		
+		if (topEntry != null)
+			onMouseMove(e);
 	}
 	
 	override function get_height()

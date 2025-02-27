@@ -2,8 +2,6 @@ package;
 
 import components.MainView;
 import flixel.FlxG;
-import flixel.addons.transition.TransitionData;
-import flixel.addons.transition.FlxTransitionSprite;
 import flixel.addons.transition.FlxTransitionableState;
 import haxe.ui.Toolkit;
 
@@ -16,11 +14,10 @@ class Main extends openfl.display.Sprite
 		
 		Toolkit.init();
 		Toolkit.autoScale = false;
-		Toolkit.theme = "retro-block";
-		
+		// Toolkit.theme = "retro-block";
+		Toolkit.theme = "kenney-grey";
 		
 		addChild(new flixel.FlxGame(640, 480, MenuState));
-		
 	}
 }
 
@@ -39,7 +36,7 @@ class MenuState extends FlxTransitionableState
 	{
 		add(mainUI = new MainView());
 		
-		FlxG.camera.bgColor = isStateA ? 0xFFff0000 : 0xFF0000ff;
+		FlxG.camera.bgColor = isStateA ? 0xFFd95763 : 0xFF639bff;
 		mainUI.stateName.text = isStateA ? "State A" : "State B";
 		mainUI.start.onClick = (_)->
 		{
@@ -48,9 +45,17 @@ class MenuState extends FlxTransitionableState
 			FlxG.switchState(()->new MenuState(!isStateA));
 		}
 		
-		// persistentUpdate = true;
-		// persistentDraw = true;
+		if (FlxTransitionableState.skipNextTransIn)
+			mainUI.disabled = true;
+		persistentUpdate = true;
+		persistentDraw = true;
 		super.create();
+	}
+	
+	override function finishTransIn()
+	{
+		super.finishTransIn();
+		mainUI.disabled = false;
 	}
 	
 	override function update(elapsed:Float)
